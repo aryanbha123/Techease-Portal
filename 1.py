@@ -1,27 +1,36 @@
-import sqlite3
+import numpy as np
+import matplotlib.pyplot as plt
 
-conn = sqlite3.connect('example.db')
+# Example dataset
+# Independent variable (X)
+X = np.array([1, 2, 3, 4, 5])
+# Dependent variable (Y)
+Y = np.array([2.2, 2.8, 4.5, 3.7, 5.5])
 
-cursor = conn.cursor()
+# Calculate the mean of X and Y
+mean_X = np.mean(X)
+mean_Y = np.mean(Y)
 
-cursor.execute('''
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    age INTEGER NOT NULL
-)
-''')
+# Calculate the coefficients (m: slope, c: intercept)
+m = np.sum((X - mean_X) * (Y - mean_Y)) / np.sum((X - mean_X) ** 2)
+c = mean_Y - m * mean_X
 
-cursor.execute('''
-SELECT * FROM users ''')
+print(f"Slope (m): {m}")
+print(f"Intercept (c): {c}")
 
-conn.commit()
+# Predicted Y values using the regression line
+Y_pred = m * X + c
 
-cursor.execute('SELECT * FROM users')
-rows = cursor.fetchall()
+# Plot the data points and regression line
+plt.scatter(X, Y, color='blue', label='Data Points')
+plt.plot(X, Y_pred, color='red', label='Regression Line')
+plt.xlabel('X')
+plt.ylabel('Y')
+plt.legend()
+plt.title('Linear Regression')
+plt.show()
 
-for row in rows:
-    print(row)
-
-# Close the connection
-conn.close()
+# Predict a new value (example)
+x_new = 6
+y_new = m * x_new + c
+print(f"Predicted value for X={x_new}: Y={y_new}")

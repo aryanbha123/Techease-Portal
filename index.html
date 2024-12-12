@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <button>
+        Click to generate quiz
+    </button>
+    <p id="quiz"></p>
+    <script>
+        const msg = async () => {
+            fetch('http://localhost:3000/api/quiz/generate/?marks=100&noOfQuestions=10&difficulty="hard"&topic="Java"')
+                .then((data) => {
+                    console.log(data);
+                }).catch((err) => {
+                    console.log(err);
+                })
+        }
+    </script>
+</body>
+
+</html>

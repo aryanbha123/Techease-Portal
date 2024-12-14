@@ -7,10 +7,12 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import connection from './db/connectToDb.js';
 import {Server} from 'socket.io';
-import http from 'http'
+import http from 'http';
 // importing routes starts
 import QuizRoutes from './app/routes/Quiz.js';
+import UserRoutes from './app/routes/UserRoute.js';
 import corsConfig from './config/corsConfig.js';
+import { isAuthenticated } from './app/middlewares/isAuthenticated.js';
 // importing routes ends
 
 const app = express();
@@ -27,10 +29,11 @@ const io = new Server(server, {cors:corsConfig});
 io.on('connection' , (S)=>{
     console.log('a user connected');
 })
-// middlewares
-
+// auth routes
+app.use('/auth' , UserRoutes);
+app.use(isAuthenticated);
 // api
 app.use('/api' , QuizRoutes);
 
-app.get('/' ,(req,res)=> { res.send(req.sessionID); } );
+app.get('/' ,(req,res)=> { res.send("Server Live"); } );
 server.listen(PORT,() => { console.log("http://localhost:"  + PORT + " " + JSON.stringify(corsConfig)) })

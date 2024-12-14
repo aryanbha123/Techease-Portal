@@ -1,13 +1,19 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import {useSelector , useDispatch } from 'react-redux';
 import ProtectedRoutes from './components/auth/ProtectedRoutes';
+import { getUser } from './store/api/UserApi';
 export default function App() {
-
+  const dispacth = useDispatch();
+  useEffect(() => {
+      document.title = "Login";
+      dispacth(getUser());
+  },[]);
   // Shared Routes
   const Landing = lazy(() => import('./pages/Landing'));
   const SignUp = lazy(() => import('./pages/SignUp'));
   const Quiz = lazy(() => import('./pages/Quiz'));
-  const user = false;
+  const user = useSelector((s) => s.auth.user);
   return (
     <Suspense fallback={<>Loading ...</>} >
       <BrowserRouter>

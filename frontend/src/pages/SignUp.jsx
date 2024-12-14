@@ -1,184 +1,116 @@
-import { useState, useEffect } from "react";
-import { TextField, Alert } from "@mui/material";
-import { auth, googleProvider } from "../firebase";
-import {
-    createUserWithEmailAndPassword,
-    signInWithPopup,
-    sendEmailVerification,
-    onAuthStateChanged,
-} from "firebase/auth";
+import React, { useEffect } from 'react';
 
-function Signup() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [name, setName] = useState("");
-    const [error, setError] = useState(""); // State for error messages
-    const [emailVerified, setEmailVerified] = useState(false); // State to track email verification status
-
-    // Check email verification status
+export default function Login() {
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if (user) {
-                setEmailVerified(user.emailVerified);
-                if (!user.emailVerified) {
-                    alert("Please verify your email to access all features.");
-                }
-            }
-        });
-        return () => unsubscribe();
+        document.title = "Register"
     }, []);
-
-    // Handle user registration
-    const handleSignUp = async () => {
-        setError(""); // Clear previous error messages
-        if (!name) {
-            setError("Please enter your name.");
-            return;
-        }
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
-            console.log("User signed up:", user);
-
-            // Send email verification
-            await sendEmailVerification(user);
-            alert("Signup successful! Please check your email for verification.");
-        } catch (error) {
-            console.error("Error signing up:", error.message);
-            setError(error.message);
-        }
-    };
-
-    // Handle Google sign-up
-    const handleGoogleSignUp = async () => {
-        setError(""); // Clear previous error messages
-        try {
-            const result = await signInWithPopup(auth, googleProvider);
-            console.log("Google user signed up:", result.user);
-            alert("Signup successful!");
-        } catch (error) {
-            console.error("Error with Google sign-up:", error.message);
-            setError(error.message);
-        }
-    };
-
-    // Resend verification email
-    const resendVerificationEmail = async () => {
-        const user = auth.currentUser;
-        if (user && !user.emailVerified) {
-            try {
-                await sendEmailVerification(user);
-                alert("Verification email resent. Please check your inbox.");
-            } catch (error) {
-                console.error("Error resending verification email:", error.message);
-                setError(error.message);
-            }
-        } else {
-            alert("User is either not logged in or already verified.");
-        }
-    };
-
     return (
-        <section className="flex flex-col md:flex-row h-screen">
-            {/* Left Section */}
-            <div className="flex-[0.4] h-1/3 md:h-full bg-gray-800 text-white flex flex-col items-center justify-center text-center p-6">
-                <h1 className="text-4xl font-bold mb-4">Join Us</h1>
-                <p className="text-base text-gray-300">
-                    Create your account to start your journey with us.
-                </p>
+        <section className="flex flex-col md:flex-row h-screen items-center">
+            <div className="bg-blue-600 hidden lg:block w-full md:w-1/2 xl:w-2/3 h-screen">
+                <img src="assets/image.png" alt="Background" className="w-full h-full object-cover" />
             </div>
 
-            {/* Right Section */}
-            <div className="flex-1 h-2/3 md:h-full flex items-center justify-center bg-gray-100">
-                <div className="w-full max-w-md flex flex-col gap-6 p-8 bg-white shadow-lg rounded-lg">
-                    {/* Header */}
-                    <div className="text-center">
-                        <h2 className="text-2xl font-semibold text-gray-800">Sign Up</h2>
-                        <p className="text-gray-500">Please fill in the details below</p>
-                    </div>
+            <div className="bg-white w-full md:max-w-xl lg:max-w-full md:mx-auto  md:w-[700px] xl:w-1/3 h-screen px-6 lg:px-16 xl:px-12 flex items-center justify-center">
+                <div className="w-full h-100">
+                    <h1 className="text-xl md:text-2xl font-bold leading-tight mt-12">Log in to your account</h1>
 
-                    {/* Error Alert */}
-                    {error && <Alert severity="error">{error}</Alert>}
+                    <form className="mt-6" action="#" method="POST">
 
-                    {/* Name Field */}
-                    <TextField
-                        required
-                        label="Full Name"
-                        type="text"
-                        fullWidth
-                        variant="outlined"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                    />
+                        <div className='grid grid-cols-2 gap-3'>
+                            <div>
+                                <label htmlFor="email" className="block text-gray-700">Email Address</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="Enter Email Address"
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                                    autoFocus
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="email" className="block text-gray-700">Email Address</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="Enter Email Address"
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                                    autoFocus
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="email" className="block text-gray-700">Email Address</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="Enter Email Address"
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                                    autoFocus
+                                    required
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor="email" className="block text-gray-700">Email Address</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    placeholder="Enter Email Address"
+                                    className="w-full px-4 py-3 rounded-lg bg-gray-200 mt-2 border focus:border-blue-500 focus:bg-white focus:outline-none"
+                                    autoFocus
+                                    required
+                                />
+                            </div>
 
-                    {/* Email Field */}
-                    <TextField
-                        required
-                        label="Email Address"
-                        type="email"
-                        fullWidth
-                        variant="outlined"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
+                      
 
-                    {/* Password Field */}
-                    <TextField
-                        required
-                        label="Password"
-                        type="password"
-                        fullWidth
-                        variant="outlined"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
+                            <div className="text-right mt-2">
+                                <a href="#" className="text-sm font-semibold text-gray-700 hover:text-blue-700 focus:text-blue-700">Forgot Password?</a>
+                            </div>
 
-                    {/* Sign Up Button */}
-                    <button
-                        onClick={handleSignUp}
-                        className="w-full bg-gray-800 text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition"
-                    >
-                        Sign Up
-                    </button>
-
-                    {/* OR Divider */}
-                    <div className="flex items-center gap-4">
-                        <hr className="flex-1 border-gray-300" />
-                        <span className="text-gray-500">OR</span>
-                        <hr className="flex-1 border-gray-300" />
-                    </div>
-
-                    {/* Google Sign-Up Button */}
-                    <button
-                        onClick={handleGoogleSignUp}
-                        className="w-full bg-white border border-gray-300 text-gray-600 px-4 py-2 rounded-lg shadow-sm hover:bg-gray-50 flex items-center justify-center gap-2 transition"
-                    >
-                        <img
-                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png"
-                            alt="Google"
-                            className="h-5 w-5"
-                        />
-                        Sign up with Google
-                    </button>
-
-                    {/* Email Verification Notice */}
-                    {!emailVerified && (
-                        <div className="text-center mt-4">
-                            <p className="text-sm text-gray-500">
-                                Haven't received the verification email?
-                            </p>
-                            <button
-                                onClick={resendVerificationEmail}
-                                className="text-blue-500 hover:underline"
-                            >
-                                Resend Verification Email
-                            </button>
                         </div>
-                    )}
+
+                        <button
+                            type="submit"
+                            className="w-full block bg-blue-500 hover:bg-blue-400 focus:bg-blue-400 text-white font-semibold rounded-lg px-4 py-3 mt-6"
+                        >
+                            Log In
+                        </button>
+                    </form>
+
+                    <hr className="my-6 border-gray-300 w-full" />
+
+                    <button
+                        type="button"
+                        className="w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300"
+                    >
+                        <div className="flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="w-6 h-6" viewBox="0 0 48 48">
+                                <defs>
+                                    <path id="a" d="M44.5 20H24v8.5h11.8C34.7 33.9 30.1 37 24 37c-7.2 0-13-5.8-13-13s5.8-13 13-13c3.1 0 5.9 1.1 8.1 2.9l6.4-6.4C34.6 4.1 29.6 2 24 2 11.8 2 2 11.8 2 24s9.8 22 22 22c11 0 21-8 21-22 0-1.3-.2-2.7-.5-4z" />
+                                </defs>
+                                <clipPath id="b">
+                                    <use xlinkHref="#a" overflow="visible" />
+                                </clipPath>
+                                <path clipPath="url(#b)" fill="#FBBC05" d="M0 37V11l17 13z" />
+                                <path clipPath="url(#b)" fill="#EA4335" d="M0 11l17 13 7-6.1L48 14V0H0z" />
+                                <path clipPath="url(#b)" fill="#34A853" d="M0 37l30-23 7.9 1L48 0v48H0z" />
+                                <path clipPath="url(#b)" fill="#4285F4" d="M48 48L17 24l-4-3 35-10z" />
+                            </svg>
+                            <span className="ml-4">Log in with Google</span>
+                        </div>
+                    </button>
+
+                    <p className="mt-8">
+                        Need an account? <a href="#" className="text-blue-500 hover:text-blue-700 font-semibold">Create an account</a>
+                    </p>
+
                 </div>
             </div>
         </section>
     );
 }
-
-export default Signup;

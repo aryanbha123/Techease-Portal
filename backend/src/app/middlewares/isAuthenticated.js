@@ -7,7 +7,7 @@ export async function isAuthenticated(req, res , next) {
             return sendRes("Unauthorised ", 401, false, res );
         }
         const secret = process.env.JWT_SECRET;
-        const decoded = jwt.verify(refresh_token , secret);
+        const decoded = jwt.verify(token , secret);
         req.user = decoded;
         next();
     } catch (error) {

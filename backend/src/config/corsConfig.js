@@ -5,7 +5,7 @@ const allowedOrigins = process.env.CORS_ORIGIN;
 const corsConfig = {
     origin: allowedOrigins,
     methods: ['GET', 'POST'],
-    allowedHeaders: ['Authorization'], // Corrected spelling
+    allowedHeaders: ['Authorization','Content-Type'], // Corrected spelling
     credentials:true
 }
 export default corsConfig;

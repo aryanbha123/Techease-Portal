@@ -9,7 +9,7 @@ const secret = process.env.JWT_SECRET;
 export const login = async (req, res) => {
     try {
         const { email, password } = req.body;
-        const user = Users.findOne({ email });
+        const user = await Users.findOne({ email });
         if (!user) {
             return sendRes("Invalid Credentials", 401, false, res);
         }
@@ -17,7 +17,7 @@ export const login = async (req, res) => {
         if (!isValidPassword) {
             return sendRes("Invalid Credentials", 401, false, res);
         }
-        const token = jwt.sign({ id: user._id }, secret, { expiresIn: '1d' });
+        const token = await jwt.sign({ id: user._id }, secret, { expiresIn: '1d' });
         res.cookie('refresh_token', token, {
             httpOnly: true,
             maxAge: 24 * 60 * 60 * 1000,
@@ -33,7 +33,7 @@ export const login = async (req, res) => {
 
 export const getProfiile = async (req, res, next) => {
     try {
-        const User = await Users.findById(req.user);
+        const User = await Users.findById(req.user.id);
         if (!User) {
             return sendRes("User not found", 404, false, res);
         }
@@ -59,7 +59,9 @@ export const register = async (req, res) => {
             secure: true,
             sameSite: 'none',
         });
+        sendRes("Registeration Successful " , 400 , false , res);
     } catch (error) {
+        console.log(error)
         sendRes(error.message, 500, false, res);
     }
 } 

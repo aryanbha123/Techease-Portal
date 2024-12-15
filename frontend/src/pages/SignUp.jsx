@@ -32,12 +32,11 @@ export default  function SignUp() {
         }
 
         try {
-            const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/register` , formData , {withCredentials:true});
-            if(res.status == 200){
-                dispatch(getUser());
-            }
+            await axios.post(`${process.env.REACT_APP_API_URL}/auth/register` , formData , {withCredentials:true});
+            dispatch(getUser());
+            
         } catch (error) {
-            setError(error.message);
+            setError(error.response.data.message);
             setOpen(true);
         } finally {
             setRegister(false);
@@ -131,7 +130,7 @@ export default  function SignUp() {
                     </div>
 
                     <hr className="my-6 border-gray-300 w-full" />
-
+{/* 
                     <button
                         type="button"
                         className="w-full block bg-white hover:bg-gray-100 focus:bg-gray-100 text-gray-900 font-semibold rounded-lg px-4 py-3 border border-gray-300"
@@ -151,7 +150,7 @@ export default  function SignUp() {
                             </svg>
                             <span className="ml-4">Log in with Google</span>
                         </div>
-                    </button>
+                    </button> */}
 
                     <p className="mt-8">
                         Already user ? <Link to={'/'} className="text-blue-500 hover:text-blue-700 font-semibold">Login </Link>

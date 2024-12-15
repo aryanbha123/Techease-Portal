@@ -59,7 +59,7 @@ export const register = async (req, res) => {
             secure: true,
             sameSite: 'none',
         });
-        sendRes("Registeration Successful " , 400 , false , res);
+        sendRes("Registeration Successful " , 200 , false , res);
     } catch (error) {
         console.log(error)
         sendRes(error.message, 500, false, res);

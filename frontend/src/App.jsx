@@ -19,6 +19,9 @@ export default function App() {
   // user components
   const UserDashBoard = lazy(() => import('./pages/client/Dashboard'));
   const Home = lazy(() => import('./pages/client/Home'));
+
+  // admin components
+  const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
   return (
     <Suspense fallback={<><CircularProgress/></>} >
       <BrowserRouter>
@@ -40,7 +43,11 @@ export default function App() {
           </Route>
           {/* Admin Routes */}
           <Route element={<ProtectedRoutes user={user} redirect={'/'} requiredRoles={['admin']} />} >
-            <Route path='/admin' element={<>Admin's Route</>} />
+            <Route path='/admin' element={<AdminDashboard WrapperComponent={<>Home</>} ></AdminDashboard>} />
+            <Route path='/admin/manage/course' element={<AdminDashboard WrapperComponent={<>Home</>} ></AdminDashboard>} />
+            <Route path='/admin/manage/users' element={<AdminDashboard WrapperComponent={<>Home</>} ></AdminDashboard>} />
+            <Route path='/admin/manage/quiz' element={<AdminDashboard WrapperComponent={<>Home</>} ></AdminDashboard>} />
+            <Route path='/admin/' element={<AdminDashboard WrapperComponent={<>Home</>} ></AdminDashboard>} />
           </Route>
 
           {/* Quiz Routes */}

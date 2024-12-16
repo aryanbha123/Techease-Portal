@@ -1,14 +1,16 @@
 import { Navigate, Outlet } from "react-router-dom";
 
-export default function ProtectedRoute({ redirect = "/", user, requiredRoles = [] }) {
+export default function ProtectedRoute({ redirect = "/", user, requiredRole, userRole }) {
+  if (!user) {
+    // If the user is not logged in, redirect to the specified redirect path (login).
+    return <Navigate to={redirect} />;
+  }
 
-    if (!user) {
-        return <Navigate to={redirect} />;
-    }
+  if (requiredRole && userRole !== requiredRole) {
+    // If the user is logged in but their role doesn't match the required role, redirect.
+    return <Navigate to={redirect} />;
+  }
 
-    if (requiredRoles.length > 0 && !requiredRoles.includes(user.role)) {
-        return <Navigate to={redirect} />;
-    }
-
-    return <Outlet />;
+  // If all conditions are met, render the requested route.
+  return <Outlet />;
 }

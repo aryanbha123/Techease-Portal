@@ -20,12 +20,9 @@ export default async function generateQuizService(title, marks, noOfQuestions, D
             The quiz topic is ${title} , Total Marks ${marks} , Total number of questions ${noOfQuestions} and Difficulty level ${Difficulty}
             `;
         const res = await model.generateContent(prompt);
-        
-        const content = res.response.text(); // Access the generated content directly
-        console.log(convertToJson(content));
-        const jsonResponse = JSON.parse(content); // Parse JSON response if applicable
 
-        return jsonResponse;
+        const content = res.response.text(); // Access the generated content directly
+        return content;
     } catch (error) {
         return error.message;
     }

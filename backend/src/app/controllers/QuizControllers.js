@@ -71,20 +71,34 @@ export const addOption = async (req, res) => {
     }
 };
 
-
 export const getQuiz = async (req, res) => {
     try {
-        const quizzes = await Quiz.find();
-        if (quizzes.length === 0) {
-            return res.status(404).json({
-                status: false,
-                message: 'No quizzes found',
-            });
-        }
+        // Get page, limit, and search query from request parameters
+        const page = parseInt(req.query.page) || 1; // Default page is 1
+        const limit = parseInt(req.query.limit) || 10; // Default limit is 10
+        const search = req.query.search || ""; // Search query, default is empty
+
+        // Calculate the skip value
+        const skip = (page - 1) * limit;
+
+        // Build the query object for search
+        const query = search
+            ? { name: { $regex: search, $options: "i" } } // Case-insensitive regex search
+            : {};
+
+        // Fetch quizzes from the database with pagination and search
+        const quizzes = await Quiz.find(query).skip(skip).limit(limit);
+
+        // Total count of items that match the query
+        const totalItems = await Quiz.countDocuments(query);
 
         res.status(200).json({
             status: true,
             data: quizzes,
+            page: page,
+            limit: limit,
+            totalItems: totalItems, // Add total items count for frontend reference
+            totalPages: Math.ceil(totalItems / limit), // Calculate total pages
         });
     } catch (error) {
         res.status(400).json({

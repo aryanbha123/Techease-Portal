@@ -31,7 +31,7 @@ io.on('connection' , (S)=>{
 })
 // auth routes
 app.use('/auth' , UserRoutes);
-app.use(isAuthenticated);
+// app.use(isAuthenticated);
 // api
 app.use('/api' , QuizRoutes);
 

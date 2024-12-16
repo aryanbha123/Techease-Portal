@@ -29,22 +29,22 @@ export default function Home() {
                     modules={[Pagination, Autoplay]}  // Adding the necessary modules
                 >
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]"></div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]"></div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]"></div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]"></div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]"></div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]"></div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]"></div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]"></div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]"></div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]"></div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]"></div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]"></div>
                     </SwiperSlide>
                 </Swiper>
             </div>
@@ -70,19 +70,19 @@ export default function Home() {
                     modules={[Pagination, Autoplay]}
                 >
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]"></div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]"></div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]"></div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]"></div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]"></div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]"></div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]"></div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]"></div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]"></div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]"></div>
                     </SwiperSlide>
                 </Swiper>
             </div>
@@ -108,19 +108,19 @@ export default function Home() {
                     modules={[Pagination, Autoplay]}
                 >
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]">1</div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]">1</div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]">2</div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]">2</div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]">3</div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]">3</div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]">4</div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]">4</div>
                     </SwiperSlide>
                     <SwiperSlide>
-                        <div className="rounded-2xl h-56 w-full bg-[#f1f1f1]">5</div>
+                        <div className="rounded-2xl h-56 w-full bg-[#fff]">5</div>
                     </SwiperSlide>
                 </Swiper>
             </div>

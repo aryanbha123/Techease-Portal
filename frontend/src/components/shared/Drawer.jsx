@@ -26,9 +26,13 @@ export default function CustomMiniDrawer({ open, setOpen, menuItems }) {
             variant="permanent"
             sx={{
                 width: isHovered ? 240 : 60,
+       
                 flexShrink: 0,
                 '& .MuiDrawer-paper': {
-                    marginTop: "70px",
+                    marginTop: "89px",
+                    borderRadius:"10px",
+                    marginBottom: "15px",
+                    marginLeft:"20px",
                     width: isHovered ? 240 : 60,
                     transition: 'width 0.3s',
                     backgroundColor: '#fff',
@@ -40,20 +44,24 @@ export default function CustomMiniDrawer({ open, setOpen, menuItems }) {
             onMouseLeave={() => setIsHovered(false)}
         >
             <List sx={{
-                margin: "10px 0 0 0"
+                margin: "0px 0 0 0"
             }} >
                 {menuItems.map((item, index) => (
-                    <Link to={item.to} >
+                    <Link key={index} to={item.to} >
                         <ListItem
                             className="cursor-pointer"
                             sx={{ cursor: "pointer" }}
-                            button
+                         
                             key={index}
                             onClick={() => console.log(`Navigating to ${item.text}`)}
                         >
-                            {item.icon}
+                            <span className="" >
+                                <IconButton >
+                                    {item.icon}
+                                </IconButton>
+                            </span>
                             {isHovered && (
-                                <span className="text-nowrap text-md pl-5" >{item.text}</span>
+                                <span className="text-nowrap  text-md pl-5" >{item.text}</span>
                             )}
                         </ListItem>
                     </Link>
@@ -61,8 +69,10 @@ export default function CustomMiniDrawer({ open, setOpen, menuItems }) {
             </List>
 
             {/* Logout Button */}
-            <ListItem sx={{ cursor: "pointer" }} button onClick={handleLogout}>
-                <PowerSettingsNew />
+            <ListItem sx={{ cursor: "pointer" }}  onClick={handleLogout}>
+                <IconButton>
+                    <PowerSettingsNew />
+                </IconButton>
                 {isHovered && <span className="text-sm pl-5" >Logout</span>}
             </ListItem>
         </Drawer>

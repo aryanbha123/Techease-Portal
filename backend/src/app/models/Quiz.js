@@ -27,9 +27,10 @@ const QuestionSchema = Schema({
 const QuizSchema = Schema(
     {
         creator: { type: mongoose.SchemaTypes.ObjectId, ref: 'Users', required: true },
+        title:{type:String },
         opensAt: { type: Date, required: true },
         closeAt: { type: Date, required: true },
-        duration: { type: Date, require: true },
+        duration: { type: Number, require: true },
         questions: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'Questions' }],
         marks: { type: Number, required: true },
         averageScore: { type: Number, default: 0 },

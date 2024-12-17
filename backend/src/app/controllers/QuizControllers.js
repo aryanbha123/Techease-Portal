@@ -4,16 +4,17 @@ import isValidQuiz from '../validators/isValidQuiz.js';
 
 export const addQuiz = async (req, res) => {
     try {
-        const { creator, opensAt, closeAt, duration, questions, marks } = req.body;
+        const { creator, title,opensAt, closeAt, duration, questions, marks } = req.body;
         const reqQuiz = {
             creator,
+            title,
             opensAt,
             closeAt,
             duration,
             questions,
             marks,
         };
-
+        console.log(reqQuiz);
         const checkQuiz = await isValidQuiz(reqQuiz);
 
         if (checkQuiz.success) {
@@ -83,7 +84,7 @@ export const getQuiz = async (req, res) => {
 
         // Build the query object for search
         const query = search
-            ? { name: { $regex: search, $options: "i" } } // Case-insensitive regex search
+            ? { title: { $regex: search, $options: "i" } } // Case-insensitive regex search
             : {};
 
         // Fetch quizzes from the database with pagination and search

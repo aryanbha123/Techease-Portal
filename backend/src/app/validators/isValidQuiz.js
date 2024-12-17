@@ -1,7 +1,7 @@
 import Quiz from "../models/Quiz.js";
 
 export default function (quiz) {
-    if (!quiz.creator || !quiz.openAt || !quiz.closeAt  || !quiz.marks || !quiz.duration) {
+    if (!quiz.creator || !quiz.opensAt || !quiz.closeAt  || !quiz.marks || !quiz.duration) {
         return {success:false , message : "Please provide all fields"};
     }
     const marks = calc(quiz.questions);

@@ -21,24 +21,22 @@ export default async function generateQuizService(title, marks, noOfQuestions, D
             `;
         const res = await model.generateContent(prompt);
 
-        const content = res.response.text(); // Access the generated content directly
+        const content = res.response.text();
         return content;
     } catch (error) {
         return error.message;
     }
 }
 
-function convertToJson(jsonString) {
-    try {
-        // Trim any extra quotes or whitespace
-        const cleanString = jsonString.trim().replace(/^```|```$/g, '');
-        // Parse the JSON
-        const jsonObject = JSON.parse(cleanString);
-        return jsonObject;
-    } catch (error) {
-        console.error("Invalid JSON string:", error);
-        return null;
-    }
+const convertInJson  = (str = "") => {
+    
+    str = str.split('');
+    str.pop()
+    str.pop()
+    str.pop()
+    str.shift();str.shift();str.shift();str.shift();str.shift();str.shift();str.shift();
+    str = str.join('');
+    str = str.trim();
+    const quizJson = JSON.parse(str);
+    return quizJson;
 }
-
-

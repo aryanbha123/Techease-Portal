@@ -4,6 +4,7 @@ import axios from "axios";
 import { Box, Button, Typography, InputAdornment, InputLabel, FormControl, Input, IconButton, } from "@mui/material";
 import { Edit, Refresh, Search } from "@mui/icons-material";
 import LoadingModal from "../../components/modals/LoadingModal";
+import { Link, Navigate } from "react-router-dom";
 const Addquiz = React.lazy(() => import("../../components/modals/Addquiz"));
 
 export default function InfiniteScrollWithMongo() {
@@ -123,11 +124,11 @@ export default function InfiniteScrollWithMongo() {
           loader={<Typography align="center">Loading...</Typography>}
           endMessage={<Typography align="center"></Typography>}
         >
-          <div className="flex justify-start">
+          <div className="flex justify-start gap-3">
             {items && items.length > 0 ? (
               items.map((item, index) => (
-                <div className="">
-                  <Card title={item.title} createdAt={item.createdAt} updatedAt={item.updatedAt} />
+                <div key={index} className="">
+                  <Card _id={item._id} title={item.title} createdAt={item.createdAt} updatedAt={item.updatedAt} />
                 </div>
               ))
             ) : (
@@ -142,35 +143,35 @@ export default function InfiniteScrollWithMongo() {
           <Addquiz isHidden={showModal} items={items} setModalClose={setShowModal} />
         </React.Suspense>
       }
-
-
     </>
   );
 }
 
 
 
-const Card = ({ updatedAt,createdAt, title, description = "No Description" }) => {
+const Card = ({ _id, updatedAt, createdAt, title, description = "No Description" }) => {
   return (
-    <div class="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
-      <div class="p-4">
+    <div className="relative flex flex-col my-6 bg-white shadow-sm border border-slate-200 rounded-lg w-96">
+      <div className="p-4">
         <div className="flex justify-between">
-          <h5 class="text-slate-800 text-xl font-semibold">
+          <h5 className="text-slate-800 text-xl font-semibold">
             {title}
           </h5>
-          <IconButton>
-            <Edit/>
-          </IconButton>
+          <Link to={`/admin/manage/quiz/${_id}`} >
+            <IconButton>
+              <Edit />
+            </IconButton>
+          </Link>
         </div>
-        <small class="text-slate-600 leading-normal font-light">
+        <small className="text-slate-600 leading-normal font-light">
           {description}
         </small>
       </div>
-      <div class="mx-3 border-t border-slate-200 pb-3 pt-2 px-1">
-        <span class="text-sm text-slate-600 font-medium">
+      <div className="mx-3 border-t border-slate-200 pb-3 pt-2 px-1">
+        <span className="text-sm text-slate-600 font-medium">
           Created At: {createdAt}
-        </span><br/>
-        <span class="text-sm text-slate-600 font-medium">
+        </span><br />
+        <span className="text-sm text-slate-600 font-medium">
           Last updated: {updatedAt}
         </span>
       </div>

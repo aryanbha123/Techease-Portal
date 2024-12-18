@@ -3,8 +3,10 @@ import { Button, CircularProgress, IconButton } from '@mui/material';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import LoadingModal from './LoadingModal';
+import axios from 'axios';
+import { csvToJson } from '../../libs/jsonParser';
 
-export default function ExcelModal({ setModalClose }) {
+export default function ExcelModal({ setModalClose, id }) {
     const [file, setFiles] = useState(null);
     const [loading, setLoading] = useState(false);
     const { getRootProps, getInputProps } = useDropzone({
@@ -28,6 +30,20 @@ export default function ExcelModal({ setModalClose }) {
 
     const uploadCsv = async () => {
         setLoading(true);
+        try {
+            const data = await csvToJson(file , id);
+            console.log(data);
+            const res = axios.post(`${process.env.REACT_APP_API_URL}/api/quiz/add/questions`, {data:data , quizId:id}, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            })
+            console.log(res);
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -62,7 +78,7 @@ export default function ExcelModal({ setModalClose }) {
 
                         {
                             loading &&
-                            <LoadingModal/>
+                            <LoadingModal />
                         }
                     </section>
                 </div>

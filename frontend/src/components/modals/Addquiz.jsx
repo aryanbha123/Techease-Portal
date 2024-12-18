@@ -34,7 +34,15 @@ export default function Addquiz({ setModalClose, items, isHidden }) {
             .finally(() => {
                 setModalClose(false);
             })
-
+        setFormData({
+            title: '',
+            creator: user._id,
+            opensAt: '',
+            closeAt: '',
+            duration: '',
+            questions: [],
+            marks: null,
+        })
     }
     return (
         <div className='h-screen w-screen bg-opacity-25 px-36 py-24 bg-black fixed top-0 left-0 z-[2099]'>

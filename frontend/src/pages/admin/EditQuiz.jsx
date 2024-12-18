@@ -119,7 +119,7 @@ export default function EditQuiz() {
             <AddQuestion setCurrentMarks={setCurrentMarks} maxMarks={maxMarks} currentMarks={currentMarks} formData={formData} setFormData={setFormData} />
             {
                 !ModalClose && <Suspense fallback={<LoadingModal/>}  >
-                    <ExcelModal  setModalClose={setModalClose} />
+                    <ExcelModal id={id} setModalClose={setModalClose} />
                 </Suspense>
             }
         </section >

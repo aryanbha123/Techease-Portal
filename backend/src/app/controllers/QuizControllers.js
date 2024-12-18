@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import Quiz, { Option, Question } from '../models/Quiz.js';
+import Quiz from '../models/Quiz.js';
 import sendRes from '../util/sendRes.js';
 import checkQuestion from '../validators/isValidQuestion.js';
 import isValidQuiz from '../validators/isValidQuiz.js';
@@ -34,18 +34,18 @@ export const addQuiz = async (req, res) => {
 export const addQuestion = async (req, res) => {
 
     const session = mongoose.startSession();
-    const { quizId, question, marks,image,  category, answer } = req.body;
+    const { question,quizId, marks, image, category, answer } = req.body;
     try {
         (await session).startTransaction();
         const questionToAdd = {
-            quizId,
             marks,
             category,
-            question
+            question,
+            quizId
         };
         const isValidQuestion = await checkQuestion(questionToAdd);
         if (isValidQuestion) {
-            const newQuestion = new Question(questionToAdd);
+            const newQuestion = questionToAdd;
             if (answer && category == "Text") {
                 newQuestion.answer = answer;
             }
@@ -53,7 +53,6 @@ export const addQuestion = async (req, res) => {
                 console.log('image there')
                 newQuestion.image = req.file.path;
             }
-            await newQuestion.save();
             const quiz = await Quiz.findById(quizId);
             quiz.questions.push(newQuestion);
             await quiz.save();
@@ -65,27 +64,27 @@ export const addQuestion = async (req, res) => {
     } catch (error) {
         await (await session).abortTransaction();
         sendRes(error.message, 500, false, res);
-    }finally{
+    } finally {
         (await session).endSession();
     }
 
 }
 export const addOption = async (req, res) => {
     try {
-        const { questionId, text, isCorrect } = req.body;
-        if (!text, !questionId) {
-            return sendRes("Please fill all the fields", 400, false, res);
-        }
-        const optionToAdd = {
-            questionId,
-            text,
-            isCorrect
-        };
-        const newOption = new Option(optionToAdd);
-        if (req.file.path) {
-            newOption.image = req.file.path;
-        }
-        await newOption.save();
+        // const { questionId, text, isCorrect } = req.body;
+        // if (!text, !questionId) {
+        //     return sendRes("Please fill all the fields", 400, false, res);
+        // }
+        // const optionToAdd = {
+        //     questionId,
+        //     text,
+        //     isCorrect
+        // };
+        // const newOption = new Option(optionToAdd);
+        // if (req.file.path) {
+        //     newOption.image = req.file.path;
+        // }
+        // await newOption.save();
         return sendRes("Option Added Successfully ",)
     } catch (error) {
         return sendRes(error.message, 500, false, res);
@@ -94,23 +93,19 @@ export const addOption = async (req, res) => {
 
 export const getQuiz = async (req, res) => {
     try {
-        // Get page, limit, and search query from request parameters
-        const page = parseInt(req.query.page) || 1; // Default page is 1
-        const limit = parseInt(req.query.limit) || 10; // Default limit is 10
-        const search = req.query.search || ""; // Search query, default is empty
 
-        // Calculate the skip value
+        const page = parseInt(req.query.page) || 1; 
+        const limit = parseInt(req.query.limit) || 10; 
+        const search = req.query.search || "";
+
         const skip = (page - 1) * limit;
 
-        // Build the query object for search
         const query = search
-            ? { title: { $regex: search, $options: "i" } } // Case-insensitive regex search
+            ? { title: { $regex: search, $options: "i" } }
             : {};
 
-        // Fetch quizzes from the database with pagination and search
         const quizzes = await Quiz.find(query).skip(skip).limit(limit);
-
-        // Total count of items that match the query
+     
         const totalItems = await Quiz.countDocuments(query);
 
         res.status(200).json({
@@ -138,3 +133,33 @@ export const getParticularQuiz = async (req, res) => {
         sendRes("Internal Server Error ", 500, false, res)
     }
 }
+
+export const addQuestions = async (req, res) => {
+    const session = await mongoose.startSession();
+    try {
+        session.startTransaction();
+        const { data, quizId } = req.body;
+        console.log(data);
+        // Ensure that quidId and data are provided
+        // if (!quidId || !data || !Array.isArray(data)) {
+        //     return sendRes("Invalid input data", 400, false, res);
+        // }
+
+        // Find the quiz by id and add questions
+        const quiz = await Quiz.findById(quizId);
+        if (!quiz) {
+            return sendRes("Quiz not found", 404, false, res);
+        }
+        quiz.questions = [...data]; 
+        await quiz.save();
+
+        await session.commitTransaction();
+        sendRes("Questions added successfully", 200, true, res);
+    } catch (error) {
+        await session.abortTransaction();
+        console.log(error.message);
+        sendRes(error.message, 500, false, res);
+    } finally {
+        session.endSession();
+    }
+};

@@ -116,23 +116,25 @@ export default function InfiniteScrollWithMongo() {
 
 
       {/* Infinite Scroll */}
-      <div className="flex items-center  min-h-40">
+      <div id="infinite" className="flex items-center w-full min-h-40">
         <InfiniteScroll
+        
+          className="w-full"
           dataLength={items.length}
           next={fetchItems}
           hasMore={hasMore}
           loader={<Typography align="center">Loading...</Typography>}
           endMessage={<Typography align="center"></Typography>}
         >
-          <div className="flex justify-start gap-3">
+          <div className="flex w-full flex-wrap justify-start gap-3">
             {items && items.length > 0 ? (
               items.map((item, index) => (
-                <div key={index} className="">
+                <div key={index} className="max-w-fit">
                   <Card _id={item._id} title={item.title} createdAt={item.createdAt} updatedAt={item.updatedAt} />
                 </div>
               ))
             ) : (
-              <Typography>No Quiz Found </Typography>
+              <div className="flex bg-white text-center p-5  w-full">No Quiz Found </div>
             )}
           </div>
         </InfiniteScroll>

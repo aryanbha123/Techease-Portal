@@ -11,6 +11,7 @@ export default function (quiz) {
     return {
         success: true,
         message: "Quiz created successfully",
+        
     }
 
 }

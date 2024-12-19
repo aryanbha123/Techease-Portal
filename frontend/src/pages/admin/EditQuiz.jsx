@@ -1,9 +1,10 @@
-import { Add, ArrowDropDown, Google, UploadFile } from '@mui/icons-material'
+import { Add, ArrowDropDown,UploadFile } from '@mui/icons-material'
 import { Accordion, AccordionDetails, AccordionSummary, Button, CircularProgress, FormControl, Icon, IconButton, InputLabel, MenuItem, Select, TextField } from '@mui/material'
 import axios from 'axios';
 import LoadingModal from '../../components/modals/LoadingModal';
 import { lazy, Suspense, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
+import { calcMarks } from '../../libs/calcMarks';
 const  ExcelModal = lazy( () =>  import('../../components/modals/ExcelModal'));
 
 export default function EditQuiz() {
@@ -29,8 +30,6 @@ export default function EditQuiz() {
             const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/quiz/${id}`);
             if (res.data) {
                 setCurrentQuiz(res.data);
-                console.log(currentQuiz);
-
             }
         } catch (error) {
             console.log(error);
@@ -41,7 +40,6 @@ export default function EditQuiz() {
     }, []);
 
     useEffect(() => {
-        console.log(currentQuiz?.marks);
         setMaxMarks(currentQuiz?.marks)
         setCurrentMarks(calcMarks(currentQuiz ? currentQuiz.questions : []))
     }, [currentQuiz]);
@@ -126,15 +124,6 @@ export default function EditQuiz() {
     )
 }
 
-
-// calculating current marks
-const calcMarks = (questions) => {
-    let sum = 0;
-    for (let i = 0; i < questions.length; i++) {
-        sum += parseInt(questions[i].marks);
-    }
-    return sum;
-}
 
 const AddQuestion = ({ onSubmit, setCurrentMarks, currentMarks, formData, setFormData, maxMarks }) => {
     const [preview, setPreview] = useState("");
@@ -288,7 +277,3 @@ const AddQuestion = ({ onSubmit, setCurrentMarks, currentMarks, formData, setFor
         </form>
     );
 };
-
-
-
-console.log(parseInt('jd33'));

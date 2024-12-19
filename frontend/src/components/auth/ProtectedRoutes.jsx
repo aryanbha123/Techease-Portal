@@ -13,7 +13,7 @@ const ProtectedRoute = () => {
         console.log("Current pathname: ", location.pathname);
     }, [dispatch, location.pathname]);
 
-    return user ? <Outlet /> : <Navigate to="/" replace />;
+    return user ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
 export default ProtectedRoute;

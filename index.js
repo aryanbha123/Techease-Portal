@@ -1,4 +1,4 @@
-// const key = "AIzaSyAoGoKYw9Tvtl1yC-g6Q1Me4ZSeSdAQEnM";
+// const key = ""
 // const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 // const genAI = new GoogleGenerativeAI(key);

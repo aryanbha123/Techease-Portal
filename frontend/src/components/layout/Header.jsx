@@ -61,7 +61,7 @@ export default function Header() {
         <>
           {/* Overlay for the mobile nav */}
           <div
-            className={`${isMobileNavOpen ? ' z-[2002] '  : 'hidden'}bg-black bg-opacity-60 fixed top-0 left-0 w-full h-screen `}
+            className={`${isMobileNavOpen ? ' z-[2002] '  : 'hidden '}bg-black bg-opacity-60 fixed top-0 left-0 w-full h-screen `}
             onClick={closeMobileNav}
           ></div>
 

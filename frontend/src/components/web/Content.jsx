@@ -33,11 +33,11 @@ export default function Content() {
 
   return (
     <section className="pb-6">
-      <div className="flex flex-col lg:px-10 px-7">
+      <div className="flex flex-col lg:px-10 px-4">
         <h2 className="text-2xl font-bold text-gray-900 leading-[3.25rem] mb-4 lg:max-w-3xl">
           One Solution for all the problems
         </h2>
-        <div className="flex gap-6">
+        <div className="flex lg:overflow-hidden overflow-y-hidden overflow-x-scroll text-nowrap py-4 gap-6">
           {topics.map((topic) => (
             <button
               key={topic}

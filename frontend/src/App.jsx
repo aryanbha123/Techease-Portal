@@ -72,7 +72,7 @@ export default function App() {
           <Route path="/" element={<Layout>
             <Hero />
             <Content/>
-            <CollegeDropdown/>
+            {/* <CollegeDropdown/> */}
           </Layout>} />
 
           <Route path='*' element={<><NotFound /></>} />

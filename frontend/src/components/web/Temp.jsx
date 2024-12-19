@@ -11,16 +11,16 @@ export default function IndianCollegeSearch() {
   // Debounced search to handle delayed API calls
   const debouncedSearch = debounce(async (text) => {
     if (!text) {
-      setCollegeList([]); // Clear list if no search text
+      setCollegeList([]);
       return;
     }
     setLoading(true);
     try {
       // Filter by country: India
       const response = await axios.get(`http://universities.hipolabs.com/search?country=India&name=${text}`);
+      // Ensure the latest search is added to the bottom of the list
+      setCollegeList((prevList) => [...prevList, ...response.data]);
       setLoading(false);
-      // Ensure we clear the old list and add only the latest search results
-      setCollegeList(response.data);
     } catch (error) {
       console.error('Error fetching college data:', error);
       setLoading(false);
@@ -31,7 +31,7 @@ export default function IndianCollegeSearch() {
     if (searchText) {
       debouncedSearch(searchText);
     } else {
-      setCollegeList([]); // Clear list when search is cleared
+      setCollegeList([]);
     }
   }, [searchText]);
 

@@ -199,7 +199,8 @@ export default function SignUp() {
 
                         <Button
                             fullWidth
-                            sx={{ margin: "10px 0 0 0" }}
+                            sx={{ margin: "25px 0 0 0" ,padding:"11px 0"}}
+
                             variant='contained'
                             type="submit"
                         >

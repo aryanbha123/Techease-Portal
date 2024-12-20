@@ -71,12 +71,12 @@ export default function Header() {
       <>
         {/* Overlay for the mobile nav */}
         <div
-          className={`${isMobileNavOpen ? ' z-[2002] ' : 'hidden '}bg-black bg-opacity-60 fixed top-0 left-0 w-full h-screen `}
+          className={`${isMobileNavOpen ? '  ' : 'hidden z-0'}z-[2002] bg-black bg-opacity-60 fixed top-0 left-0 w-full h-screen `}
           onClick={closeMobileNav}
         ></div>
 
         {/* Mobile navigation panel */}
-        <section className={`${isMobileNavOpen ? 'translate-x-0 z-[2002] ' : '-translate-x-full '}  duration-300 transition-all bg-[#ffffff] py-8 px-6 shadow-lg w-[250px] h-screen fixed top-0 left-0 rounded-tr-[20px] rounded-br-[20px]`}>
+        <section className={`${isMobileNavOpen ? 'translate-x-0 ' : '-translate-x-full '} z-[2002]   duration-300 transition-all bg-[#ffffff] py-8 px-6 shadow-lg w-[250px] h-screen fixed top-0 left-0 rounded-tr-[20px] rounded-br-[20px]`}>
           {/* Company Logo */}
           <div className="text-center mb-8">
             <div className="text-3xl font-bold text-[#333]">Techease</div>
@@ -85,6 +85,11 @@ export default function Header() {
 
           {/* Navigation Links */}
           <ul className="flex flex-col gap-6">
+            <li>
+              <Link className="text-lg font-medium text-[#333] py-3 px-5 rounded-lg hover:bg-[#F0F0F0] hover:text-[#000] transition duration-300 ease-in-out">
+                Home
+              </Link>
+            </li>
             <li>
               <Link className="text-lg font-medium text-[#333] py-3 px-5 rounded-lg hover:bg-[#F0F0F0] hover:text-[#000] transition duration-300 ease-in-out">
                 About
@@ -97,17 +102,17 @@ export default function Header() {
             </li>
             <li>
               <Link className="text-lg font-medium text-[#333] py-3 px-5 rounded-lg hover:bg-[#F0F0F0] hover:text-[#000] transition duration-300 ease-in-out">
-                Contact
+                Plans & Pricing
               </Link>
             </li>
             <li>
               <Link className="text-lg font-medium text-[#333] py-3 px-5 rounded-lg hover:bg-[#F0F0F0] hover:text-[#000] transition duration-300 ease-in-out">
-                FAQs
+                Documentation
               </Link>
             </li>
             <li>
               <Link className="text-lg font-medium text-[#333] py-3 px-5 rounded-lg hover:bg-[#F0F0F0] hover:text-[#000] transition duration-300 ease-in-out">
-                Services
+                Contact Us
               </Link>
             </li>
           </ul>

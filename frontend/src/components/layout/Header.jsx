@@ -26,11 +26,11 @@ export default function Header() {
   }
 
   return (
-    <header className="shadow-md h-[85px] relative w-full bg-white py-1 lg:py-3 text-[#1d1d1d] font-[Lato]">
-      <nav className="max-w-[100vw] flex w-full items-center fixed h-[85px] bg-white top-0 shadow-xl z-[2000] px-7 left-0 md:w-full justify-between">
+    <header className="shadow-md h-[75px] relative w-full bg-white py-1 lg:py-3 text-[#1d1d1d] font-[Lato]">
+      <nav className="max-w-[100vw] flex w-full items-center fixed h-[75px] bg-white top-0 shadow-xl z-[2000] px-7 left-0 md:w-full justify-between">
         <div className="flex gap-4 items-center">
           {/* Logo Image */}
-          <img className="h-12" src="/assets/logo.png" alt="" />
+          <img className="h-10 lg:h-12" src="/assets/logo.png" alt="" />
         </div>
 
         {/* Large Screen Nav Items */}

@@ -4,7 +4,7 @@ import sliderSettings from '../../../libs/sliderSettings';
 
 export default function Aptitude() {
     return (
-        <section className="bg-gray-100 px-10 py-10 overflow-hidden">
+        <section className="bg-gray-100 px-10 py-8 overflow-hidden">
             <Slider centerMode centerPadding='150px'  {...sliderSettings}>
                 {Array(7).fill(0).map((_, idx) => (
                     <Card key={idx} />
@@ -16,7 +16,7 @@ export default function Aptitude() {
 
 const Card = () => {
     return (
-        <article className="border rounded-lg shadow-md bg-white p-5 flex flex-col justify-between leading-normal transition-transform transform hover:scale-105">
+        <article className="border rounded-lg shadow-md bg-white p-5 flex flex-col justify-between leading-normal transition-transform transform ">
             {/* Quiz Image */}
             <img
                 src="https://cxotoday.com/wp-content/uploads/2023/02/qualcomm.jpeg"

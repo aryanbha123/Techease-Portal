@@ -40,7 +40,7 @@ export default function Content() {
         <h2 className="text-3xl font-sans lg:px-10 px-4 mt-5 font-bold text-gray-900 leading-[3.25rem] mb-2 lg:max-w-3xl">
           One Platform with all Solutions
         </h2>
-        <div className="flex lg:px-10 px-4 lg:overflow-hidden overflow-y-hidden overflow-x-scroll text-nowrap  gap-6">
+        <div className="flex lg:px-10 pb-3 px-4 lg:overflow-hidden overflow-y-hidden overflow-x-scroll text-nowrap  gap-6">
           {topics.map((topic) => (
             <button
               key={topic}

@@ -4,35 +4,45 @@
 @tailwind utilities;
 @tailwind components;
 
-body{
+body {
     font-family: 'Lato', sans-serif;
     /* background-color: #f1f1f1; */
     min-height: 100vh;
 }
-.activeLinkContent{
+
+.activeLinkContent {
     border-bottom: 2px solid #111;
     transition: .2s all linear;
 }
+
 #infinite {
-    div{
-    width: 100%;
-}
-}
-
-.slick-track {
-    display: flex !important;
-    gap: 15px;
+    div {
+        width: 100%;
+    }
 }
 
-.slick-arrow{
+@media screen and (min-width:910px) {
+
+    .slick-track {
+        display: flex !important;
+        gap: 15px;
+    }
+}
+
+.slick-arrow {
     background: #7a7a7a !important;
     height: 35px !important;
     width: 35px !important;
     z-index: 100 !important;
     border-radius: 999px;
-    display: flex;;
+    display: flex;
+    ;
     justify-content: center;
     align-items: center;
     color: #000 !important;
 
+}
+
+.slick-dots {
+    bottom: -40px !important;
 }

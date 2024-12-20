@@ -24,7 +24,8 @@ const settings = {
             breakpoint: 640, // for mobile screens
             settings: {
                 slidesToShow: 1,
-                slidesToScroll: 1
+                slidesToScroll: 1,
+                centerPadding:"0px"
             }
         }
     ]

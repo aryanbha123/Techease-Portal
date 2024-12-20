@@ -1,5 +1,7 @@
 import { lazy, Suspense, useEffect } from 'react';
 import { BrowserRouter, Route, Routes, } from 'react-router-dom';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 import { useDispatch } from 'react-redux';
 import { getUser } from './store/api/UserApi';
 import ProtectedRoute, { UserRoute } from './components/auth/ProtectedRoutes';
@@ -7,7 +9,6 @@ import LoadingModal from './components/modals/LoadingModal';
 import NotFound from './components/utils/NotFound';
 import Hero from './components/web/Hero';
 import Content from './components/web/Content';
-import CollegeDropdown from './components/web/Temp';
 
 export default function App() {
   const dispatch = useDispatch();

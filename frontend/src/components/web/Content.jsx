@@ -1,6 +1,9 @@
-import React, { useState } from "react";
-
+import { CircularProgress } from "@mui/material";
+import React, { lazy, Suspense, useState } from "react";
 export default function Content() {
+
+
+  const Aptitude = lazy(() => import('./content/Aptitude'));
   const [activeLink, setActiveLink] = useState("Aptitude");
 
   const topics = [
@@ -15,7 +18,7 @@ export default function Content() {
   const renderContent = () => {
     switch (activeLink) {
       case "Aptitude":
-        return <p>This section covers Aptitude-related problems and solutions.</p>;
+        return <Suspense fallback={<><CircularProgress size={"15px"} /></>}><Aptitude/></Suspense>;
       case "Computer Networks":
         return <p>Explore topics on Computer Networks like protocols, IP addressing, etc.</p>;
       case "DSA":
@@ -32,12 +35,12 @@ export default function Content() {
   };
 
   return (
-    <section className="pb-6">
-      <div className="flex flex-col lg:px-10 px-4">
-        <h2 className="text-2xl font-bold text-gray-900 leading-[3.25rem] mb-4 lg:max-w-3xl">
-          One Solution for all the problems
+    <section className="pb-6 bg-gray-100">
+      <div className="flex flex-col ">
+        <h2 className="text-3xl font-sans lg:px-10 px-4 mt-5 font-bold text-gray-900 leading-[3.25rem] mb-2 lg:max-w-3xl">
+          One Platform with all Solutions
         </h2>
-        <div className="flex lg:overflow-hidden overflow-y-hidden overflow-x-scroll text-nowrap py-4 gap-6">
+        <div className="flex lg:px-10 px-4 lg:overflow-hidden overflow-y-hidden overflow-x-scroll text-nowrap  gap-6">
           {topics.map((topic) => (
             <button
               key={topic}
@@ -50,10 +53,8 @@ export default function Content() {
             </button>
           ))}
         </div>
-        <div className="mt-6">
-          <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            {activeLink}
-          </h3>
+        <div className="">
+        
           <div className="text-gray-700">{renderContent()}</div>
         </div>
       </div>

@@ -82,14 +82,10 @@ export default function SignUp() {
 
     return (
         <section className="flex flex-col md:flex-row h-screen items-center">
-            <div className="bg-blue-600 hidden lg:block lg:w-[650px] xl:w-[700px] md:w-1/2 h-screen">
-                <img src="assets/image.png" alt="Background" className="w-full h-full object-cover" />
-            </div>
 
-            <div className="bg-white w-full md:max-w-xl lg:max-w-full md:mx-auto xl:w-full px-6 lg:px-16 xl:px-12 flex justify-center">
-                <form onSubmit={submitHandler} className="w-full my-10">
+            <div className="xl:bg-[#f3f3f3]  w-full md:max-w-xl lg:max-w-full md:mx-auto xl:w-full px-6 lg:px-16 xl:px-12 flex justify-center">
+                <form onSubmit={submitHandler} className="w-full bg-white shadow-xl py-5 px-8  max-w-3xl my-10">
                     <h1 className="text-xl md:text-2xl font-bold leading-tight">Create a new account</h1>
-
                     <div className="mt-6">
                         <div className='grid grid-cols-1 md:grid-cols-2 gap-3'>
                             <TextField
@@ -139,12 +135,12 @@ export default function SignUp() {
                                 variant='standard'
                                 name='yearOfStudy'
                                 value={formData.yearOfStudy}
-                                autoFocus
+                                
                                 required
                                 onChange={changeHandler}
                             />
                             <Autocomplete
-                                autoFocus
+                                
                                 required
                                 options={programOptions}
                                 freeSolo
@@ -154,7 +150,7 @@ export default function SignUp() {
                                 }}
                                 renderInput={(params) => (
                                     <TextField
-                                        autoFocus
+                                        
                                         required
                                         {...params}
                                         label="Program"
@@ -164,7 +160,7 @@ export default function SignUp() {
                                 )}
                             />
                             <Autocomplete
-                                autoFocus
+                                
                                 required
                                 options={universityOptions}
                                 freeSolo
@@ -178,7 +174,7 @@ export default function SignUp() {
                                 renderInput={(params) => (
                                     <TextField
                                         required
-                                        autoFocus
+                                        
                                         {...params}
                                         label="University"
                                         variant="standard"

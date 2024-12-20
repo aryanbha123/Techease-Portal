@@ -18,3 +18,21 @@ body{
     width: 100%;
 }
 }
+
+.slick-track {
+    display: flex !important;
+    gap: 15px;
+}
+
+.slick-arrow{
+    background: #7a7a7a !important;
+    height: 35px !important;
+    width: 35px !important;
+    z-index: 100 !important;
+    border-radius: 999px;
+    display: flex;;
+    justify-content: center;
+    align-items: center;
+    color: #000 !important;
+
+}

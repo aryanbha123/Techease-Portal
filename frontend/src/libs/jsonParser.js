@@ -24,10 +24,10 @@ export const csvToJson = (file, quizId) => {
                     negative: row['negative'] || 0,
                     category: "MCQ",
                     options: [
-                        { optionText: row['option1'], isCorrect: true },
-                        { optionText: row['option2'], isCorrect: false },
-                        { optionText: row['option3'], isCorrect: false },
-                        { optionText: row['option4'], isCorrect: false },
+                        { text: row['option1'], isCorrect: true },
+                        { text: row['option2'], isCorrect: false },
+                        { text: row['option3'], isCorrect: false },
+                        { text: row['option4'], isCorrect: false },
                     ],
                 }));
 

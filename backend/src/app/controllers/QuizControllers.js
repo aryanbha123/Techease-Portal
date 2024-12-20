@@ -139,7 +139,7 @@ export const addQuestions = async (req, res) => {
     try {
         session.startTransaction();
         const { data, quizId } = req.body;
-        console.log(data);
+        console.log(JSON.stringify(data));
         // Ensure that quidId and data are provided
         // if (!quidId || !data || !Array.isArray(data)) {
         //     return sendRes("Invalid input data", 400, false, res);
@@ -150,7 +150,7 @@ export const addQuestions = async (req, res) => {
         if (!quiz) {
             return sendRes("Quiz not found", 404, false, res);
         }
-        quiz.questions = [...data]; 
+        quiz.questions = [...quiz.questions , ...data]; 
         await quiz.save();
 
         await session.commitTransaction();

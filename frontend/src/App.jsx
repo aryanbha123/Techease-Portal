@@ -18,13 +18,14 @@ export default function App() {
   }, [dispatch]);
 
   // Lazy-loaded pages
-  const Landing = lazy(() => import('./pages/Landing'));
+  const Login = lazy(() => import('./pages/Login'));
   const SignUp = lazy(() => import('./pages/SignUp'));
   const Quiz = lazy(() => import('./pages/Quiz'));
 
   // User Routes
   const UserDashboard = lazy(() => import('./pages/client/Dashboard'));
   const UserHome = lazy(() => import('./pages/client/Home'));
+  const UserQuiz = lazy(() => import('./pages/client/Quiz'))
 
   // Admin Routes
   const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
@@ -40,8 +41,8 @@ export default function App() {
         <Routes>
           {/* Routes for guest users */}
           <Route element={<UserRoute />}>
-            <Route path="/login" element={<Landing />} />
-            <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Layout><Login /></Layout>} />
+            <Route path="/signup" element={<Layout><SignUp /> </Layout>} />
           </Route>
 
           {/* User Routes */}
@@ -71,7 +72,7 @@ export default function App() {
           {/* Main Website */}
           <Route path="/" element={<Layout>
             <Hero />
-            <Content/>
+            <Content />
             {/* <CollegeDropdown/> */}
           </Layout>} />
 

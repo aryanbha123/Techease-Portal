@@ -29,7 +29,6 @@ export default async function generateQuizService(title, marks, noOfQuestions, D
 }
 
 const convertInJson  = (str = "") => {
-    
     str = str.split('');
     str.pop()
     str.pop()

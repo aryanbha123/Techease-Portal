@@ -20,15 +20,15 @@ export default function Content() {
       case "Aptitude":
         return <Suspense fallback={<><CircularProgress size={"15px"} /></>}><Aptitude/></Suspense>;
       case "Computer Networks":
-        return <p>Explore topics on Computer Networks like protocols, IP addressing, etc.</p>;
+        return <Suspense fallback={<><CircularProgress size={"15px"} /></>}><Aptitude/></Suspense>;
       case "DSA":
-        return <p>Learn about Data Structures and Algorithms to enhance problem-solving skills.</p>;
+        return <Suspense fallback={<><CircularProgress size={"15px"} /></>}><Aptitude/></Suspense>;
       case "DBMS":
-        return <p>Understand Database Management Systems, SQL, and normalization concepts.</p>;
+        return <Suspense fallback={<><CircularProgress size={"15px"} /></>}><Aptitude/></Suspense>;
       case "Operating Systems":
-        return <p>Dive into OS concepts like process management, memory management, and more.</p>;
+        return <Suspense fallback={<><CircularProgress size={"15px"} /></>}><Aptitude/></Suspense>;
       case "OOPS":
-        return <p>Master Object-Oriented Programming concepts and design principles.</p>;
+        return <Suspense fallback={<><CircularProgress size={"15px"} /></>}><Aptitude/></Suspense>;
       default:
         return <p>Select a topic to view its content.</p>;
     }

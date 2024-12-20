@@ -66,6 +66,11 @@ export default function Header() {
         </span>
       </nav>
 
+      {/* NAV 2 */}
+      <div className="bg-black w-full flex justify-center">
+
+      </div>
+
       {/* Mobile Navigation */}
       {/* {isMobileNavOpen && ( */}
       <>

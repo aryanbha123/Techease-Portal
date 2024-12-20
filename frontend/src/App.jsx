@@ -27,7 +27,7 @@ export default function App() {
   const UserDashboard = lazy(() => import('./pages/client/Dashboard'));
   const UserHome = lazy(() => import('./pages/client/Home'));
   const UserQuiz = lazy(() => import('./pages/client/Quiz'))
-
+  const UserSolution = lazy(() => import('./pages/client/Solution'));
   // Admin Routes
   const AdminDashboard = lazy(() => import('./pages/admin/Dashboard'));
   const AdminQuiz = lazy(() => import('./pages/admin/Quiz'));
@@ -47,15 +47,16 @@ export default function App() {
           </Route>
 
           {/* User Routes */}
-          <Route element={<ProtectedRoute />}>
+          {/* <Route element={<ProtectedRoute />}> */}
             <Route path="/user" element={<UserDashboard><UserHome /></UserDashboard>} />
             <Route path="/user/quiz" element={<UserDashboard><UserHome /></UserDashboard>} />
+            <Route path="/user/attempt/:id" element={<><UserSolution /></>} />
             <Route path="/user/course" element={<UserDashboard><UserHome /></UserDashboard>} />
             <Route path="/user/settings" element={<UserDashboard><UserHome /></UserDashboard>} />
             <Route path="/user/profile" element={<UserDashboard><UserHome /></UserDashboard>} />
             <Route path="/user/results" element={<UserDashboard><UserHome /></UserDashboard>} />
             <Route path="/user/purchases" element={<UserDashboard><UserHome /></UserDashboard>} />
-          </Route>
+          {/* </Route> */}
 
           {/* Admin Routes */}
           <Route element={<ProtectedRoute />}>

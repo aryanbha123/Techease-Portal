@@ -5,6 +5,7 @@ const responseSchema = Schema(
         quizId: { type: Schema.Types.ObjectId, ref: 'Quiz', required: true },
         userId: { type: Schema.Types.ObjectId, ref: 'Users', required: true },
         startedAt:{type:Date , default:Date.now()},
+        isubmitted:{type:Boolean , default:flase},
         responses: [
             {
                 questionId: {
@@ -12,6 +13,7 @@ const responseSchema = Schema(
                     ref: 'Question',
                     required: true
                 },
+                correctAnswer:{type:String},
                 answer: [{ type: String, required: true }],
             }
         ]

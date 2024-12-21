@@ -1,4 +1,4 @@
-const settings = {
+const SliderSettings = {
     dots: true,       // Show dot navigation
     infinite: true,
     speed: 300,
@@ -31,29 +31,4 @@ const settings = {
     ]
 }
 
-export default settings;
-const CustomPrevArrow = (props) => {
-    const { className, style, onClick } = props; // Destructure only valid props
-    return (
-        <button
-            className={className}
-            style={{ ...style, display: 'block', background: 'gray' }}
-            onClick={onClick}
-        >
-            &#8592; {/* Left Arrow */}
-        </button>
-    );
-};
-
-const CustomNextArrow = (props) => {
-    const { className, style, onClick } = props; // Destructure only valid props
-    return (
-        <button
-            className={className}
-            style={{ ...style, display: 'block', background: 'gray' }}
-            onClick={onClick}
-        >
-            &#8594; {/* Right Arrow */}
-        </button>
-    );
-};
+export default SliderSettings;

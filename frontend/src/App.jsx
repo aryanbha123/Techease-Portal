@@ -9,6 +9,7 @@ import LoadingModal from './components/modals/LoadingModal';
 import NotFound from './components/utils/NotFound';
 import Hero from './components/web/Hero';
 import Content from './components/web/Content';
+import Team from './components/web/Team';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -47,16 +48,16 @@ export default function App() {
           </Route>
 
           {/* User Routes */}
-          {/* <Route element={<ProtectedRoute />}> */}
+          <Route element={<ProtectedRoute />}>
             <Route path="/user" element={<UserDashboard><UserHome /></UserDashboard>} />
-            <Route path="/user/quiz" element={<UserDashboard><UserHome /></UserDashboard>} />
+            <Route path="/user/quiz" element={<UserDashboard><UserQuiz /></UserDashboard>} />
             <Route path="/user/attempt/:id" element={<><UserSolution /></>} />
             <Route path="/user/course" element={<UserDashboard><UserHome /></UserDashboard>} />
             <Route path="/user/settings" element={<UserDashboard><UserHome /></UserDashboard>} />
             <Route path="/user/profile" element={<UserDashboard><UserHome /></UserDashboard>} />
             <Route path="/user/results" element={<UserDashboard><UserHome /></UserDashboard>} />
             <Route path="/user/purchases" element={<UserDashboard><UserHome /></UserDashboard>} />
-          {/* </Route> */}
+          </Route>
 
           {/* Admin Routes */}
           <Route element={<ProtectedRoute />}>
@@ -75,6 +76,7 @@ export default function App() {
           <Route path="/" element={<Layout>
             <Hero />
             <Content />
+            <Team/>
             {/* <CollegeDropdown/> */}
           </Layout>} />
 

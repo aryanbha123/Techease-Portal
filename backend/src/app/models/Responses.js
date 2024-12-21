@@ -4,6 +4,7 @@ const responseSchema = Schema(
     {
         quizId: { type: Schema.Types.ObjectId, ref: 'Quiz', required: true },
         userId: { type: Schema.Types.ObjectId, ref: 'Users', required: true },
+        startedAt:{type:Date , default:Date.now()},
         responses: [
             {
                 questionId: {
@@ -19,5 +20,8 @@ const responseSchema = Schema(
         timestamps: true
     }
 );
+
+// Create a composite key (unique index) on quizId and userId
+responseSchema.index({ quizId: 1, userId: 1 }, { unique: true });
 
 export default mongoose.model('Response', responseSchema);

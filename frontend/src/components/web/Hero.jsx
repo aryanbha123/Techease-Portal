@@ -3,42 +3,50 @@ import React from 'react';
 export default function Hero() {
     return (
         <>
-            <section className="lg:py-20 py-16">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <section className="lg:py-20 py-16 font-[Lato] bg-gray-50 relative">
+                <div className="absolute inset-0 flex justify-center items-center">
+                    <div 
+                        className="w-[600px] h-[600px] rounded-full bg-gradient-to-br from-blue-500 to-blue-300 opacity-30 blur-3xl"
+                        aria-hidden="true"
+                    ></div>
+                </div>
+                <div className="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="mb-14 flex-col flex items-center text-center">
-                        <h2 className="text-4xl font-bold text-gray-900 leading-[3.25rem] mb-6 max-w-max lg:max-w-3xl lg:mx-auto">
+                        <h2 className="text-4xl font-extrabold text-gray-900 leading-tight mb-6 max-w-max lg:max-w-3xl lg:mx-auto  transition-all duration-300">
                             Built for Seamless Online Education
                         </h2>
-                        <p className="text-base font-normal text-gray-500 lg:max-w-2xl lg:mx-auto mb-8">
+                        <p className="text-lg font-medium text-gray-600 lg:max-w-2xl lg:mx-auto mb-8 leading-relaxed">
                             Empowering learning through technology, making education more accessible, engaging, and rewarding.
                         </p>
                         <div className="flex flex-col justify-center md:flex-row gap-5 max-w-lg mx-auto md:max-w-2xl lg:max-w-full">
                             <a
                                 href="#"
-                                className="cursor-pointer bg-indigo-600 py-3 px-6 rounded-full flex items-center justify-center text-sm font-semibold text-white transition-all duration-500 focus:outline-none hover:bg-indigo-700"
+                                className="cursor-pointer bg-indigo-600 py-3 px-6 rounded-full flex items-center justify-center text-sm font-semibold text-white shadow-md transition-transform transform hover:scale-105 hover:bg-indigo-700"
                             >
                                 Get Started
                             </a>
                             <a
                                 href="#"
-                                className="cursor-pointer bg-indigo-50 py-3 px-6 rounded-full flex items-center justify-center text-sm font-semibold text-indigo-600 transition-all duration-500 focus:outline-none hover:bg-indigo-100"
+                                className="cursor-pointer bg-indigo-50 py-3 px-6 rounded-full flex items-center justify-center text-sm font-semibold text-indigo-600 shadow-md transition-transform transform hover:scale-105 hover:bg-indigo-100"
                             >
                                 Learn More
                             </a>
                         </div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-lg mx-auto md:max-w-2xl lg:max-w-full">
+                </div>
+
+                <div className="grid px-7 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-lg mx-auto md:max-w-2xl lg:max-w-full">
                         {/* Feature 1 */}
                         <div className="relative w-full h-auto md:col-span-2">
-                            <div className="bg-gray-800 rounded-2xl flex flex-row flex-wrap">
-                                <div className="p-5 xl:p-8 w-full md:w-1/2">
-                                    <div className="block">
+                            <div className="bg-gray-800 rounded-2xl flex flex-row flex-wrap p-5 xl:p-8 shadow-lg">
+                                <div className="w-full">
+                                    <div className="mb-4">
                                         <svg
                                             width="30"
                                             height="30"
                                             fill="none"
                                             xmlns="http://www.w3.org/2000/svg"
-                                            className="text-white"
+                                            className="text-indigo-400"
                                         >
                                             <path
                                                 d="M15 12.5V18.75M18.75 2.5L11.25 2.5M15 28.75C8.7868 28.75 3.75 23.7132 3.75 17.5C3.75 11.2868 8.7868 6.25 15 6.25C21.2132 6.25 26.25 11.2868 26.25 17.5C26.25 23.7132 21.2132 28.75 15 28.75Z"
@@ -49,23 +57,22 @@ export default function Hero() {
                                             />
                                         </svg>
                                     </div>
-                                    <h3 className="text-lg font-bold xl:text-xl text-white py-5 w-full xl:w-64">
+                                    <h3 className="text-xl font-semibold text-white mb-4">
                                         Streamlined Online Learning Tools
                                     </h3>
-                                    <p className="text-xs font-normal text-gray-300 w-full mb-8 xl:w-64">
+                                    <p className="text-sm font-light text-gray-300 leading-relaxed mb-6">
                                         Access courses and materials seamlessly with minimal effort, enhancing your educational journey.
                                     </p>
-                                    <button className="py-2 px-5 border border-solid border-gray-300 rounded-full gap-2 text-xs text-white font-semibold flex items-center justify-between transition-all duration-500 hover:bg-white/5">
+                                    <button className="py-2 px-5 border border-solid border-gray-300 rounded-full text-sm text-gray-300 font-medium flex items-center justify-center transition-transform transform hover:scale-105 hover:bg-gray-700">
                                         Explore Features
                                     </button>
                                 </div>
-                                
                             </div>
                         </div>
                         {/* Feature 2 */}
                         <div className="relative w-full h-auto">
-                            <div className="bg-indigo-500 rounded-2xl p-5 xl:p-8 h-full">
-                                <div className="block">
+                            <div className="bg-indigo-500 rounded-2xl p-5 xl:p-8 shadow-lg">
+                                <div className="mb-4">
                                     <svg
                                         width="30"
                                         height="30"
@@ -80,21 +87,21 @@ export default function Hero() {
                                         />
                                     </svg>
                                 </div>
-                                <h3 className="py-5 text-white text-lg font-bold xl:text-xl">
+                                <h3 className="text-xl font-semibold text-white mb-4">
                                     Innovative EdTech Solutions
                                 </h3>
-                                <p className="text-xs font-normal text-white mb-8">
+                                <p className="text-sm font-light text-gray-100 leading-relaxed mb-6">
                                     Modernize your learning process with the latest educational technology tailored for you.
                                 </p>
-                                <button className="py-2 px-5 border border-solid border-gray-300 rounded-full gap-2 text-xs text-white font-semibold flex items-center justify-between transition-all duration-500 hover:bg-white/5">
+                                <button className="py-2 px-5 border border-solid border-gray-300 rounded-full text-sm text-gray-100 font-medium flex items-center justify-center transition-transform transform hover:scale-105 hover:bg-indigo-400">
                                     Learn More
                                 </button>
                             </div>
                         </div>
                         {/* Feature 3 */}
                         <div className="relative w-full h-auto">
-                            <div className="bg-violet-500 rounded-2xl p-5 xl:p-8 h-full">
-                                <div className="block">
+                            <div className="bg-violet-500 rounded-2xl p-5 xl:p-8 shadow-lg">
+                                <div className="mb-4">
                                     <svg
                                         width="30"
                                         height="30"
@@ -109,19 +116,18 @@ export default function Hero() {
                                         />
                                     </svg>
                                 </div>
-                                <h3 className="py-5 text-white text-lg font-bold xl:text-xl">
+                                <h3 className="text-xl font-semibold text-white mb-4">
                                     Transform Knowledge Into Growth
                                 </h3>
-                                <p className="text-xs font-normal text-white mb-8">
+                                <p className="text-sm font-light text-gray-100 leading-relaxed mb-6">
                                     Leverage personalized plans to gain insights and foster growth in your field.
                                 </p>
-                                <button className="py-2 px-5 border border-solid border-gray-300 rounded-full gap-2 text-xs text-white font-semibold flex items-center justify-between transition-all duration-500 hover:bg-white/5">
+                                <button className="py-2 px-5 border border-solid border-gray-300 rounded-full text-sm text-gray-100 font-medium flex items-center justify-center transition-transform transform hover:scale-105 hover:bg-violet-400">
                                     Discover More
                                 </button>
                             </div>
                         </div>
                     </div>
-                </div>
             </section>
         </>
     );

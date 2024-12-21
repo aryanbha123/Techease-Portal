@@ -35,6 +35,7 @@ export default function EditQuiz() {
             console.log(error);
         }
     }
+
     useEffect(() => {
         getQuiz();
     }, []);
@@ -150,7 +151,7 @@ const AddQuestion = ({ onSubmit, setCurrentMarks, currentMarks, formData, setFor
 
     const validateForm = () => {
         const { marks, question, category } = formData;
-        if (!question || !category || !(marks && marks < maxMarks)) {
+        if (!question || !category || !(marks && marks <= maxMarks)) {
             alert("Please ensure all fields are valid and marks do not exceed maxMarks.");
             return false;
         }
@@ -277,3 +278,6 @@ const AddQuestion = ({ onSubmit, setCurrentMarks, currentMarks, formData, setFor
         </form>
     );
 };
+
+
+// console.log(parseInt('7a'));

@@ -61,10 +61,10 @@ export default function Addquiz({ setModalClose, items, isHidden }) {
 
                         <TextField required InputLabelProps={{
                             shrink: true, // Ensures the label stays visible above the date picker
-                        }} variant='standard' value={formData.opensAt} type='date' placeholder='dd' name='opensAt' onChange={changeHandler} label="Opens At" />
+                        }} variant='standard' value={formData.opensAt} type="datetime-local" placeholder='dd' name='opensAt' onChange={changeHandler} label="Opens At" />
                         <TextField required InputLabelProps={{
                             shrink: true, // Ensures the label stays visible above the date picker
-                        }} variant='standard' value={formData.closeAt} type='date' placeholder='dd' name='closeAt' onChange={changeHandler} label="Closes At" />
+                        }} variant='standard' value={formData.closeAt} type="datetime-local" placeholder='dd' name='closeAt' onChange={changeHandler} label="Closes At" />
 
 
                         <TextField required variant='standard' type='number' value={formData.marks} name='marks' onChange={changeHandler} label="Quiz Marks" />

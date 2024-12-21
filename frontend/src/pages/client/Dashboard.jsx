@@ -4,7 +4,7 @@ import { Article, Home, Menu, MenuBook, Person, Quiz, ShoppingCart } from "@mui/
 import CustomMiniDrawer from "../../components/shared/Drawer";
 
 
-export default function Dashboard({ WrapperComponent , children }) {
+export default function Dashboard({ children }) {
     const [open, setOpen] = useState(true);  // Initially open
     const menuItems = [
         { to: '/user/', text: "Home", icon: <Home /> },
@@ -16,7 +16,7 @@ export default function Dashboard({ WrapperComponent , children }) {
     ];
 
     return (
-        <section className="h-screen bg-[#f3f3f3]">
+        <section className="h-screen bg-[#f4f4f4]">
             {/* Navbar */}
             <section className="h-[70px] relative px-5 py-2 top-0  " style={{zIndex:"2000"}}>
                     <nav className="bg-[#fff] rounded-[15px] text-white flex items-center px-6 md:px-5 justify-between w-[calc(100%-40px)]  h-[70px] fixed shadow-md z-50">
@@ -27,7 +27,7 @@ export default function Dashboard({ WrapperComponent , children }) {
 
             {/* Mini Drawer */}
             <CustomMiniDrawer menuItems={menuItems} open={open} setOpen={setOpen} />
-            <main className="pl-[70px] bg-[#f3f3f3] font-['Poppins'] text-lg py-5">
+            <main className="pl-[90px] pr-5 bg-[#f4f4f4] font-['Poppins'] text-lg py-5">
                 {children}
             </main>
         </section>

@@ -34,7 +34,7 @@ export default function Login() {
     };
 
     return (
-        <section className="flex w-full lg:bg-[#f3f3f3] items-center py-10 justify-center">
+        <section className="flex w-full lg:bg-[#f4f4f4] items-center py-10 justify-center">
             <div className="bg-[#fff] lg:rounded-md lg:shadow-lg w-full md:max-w-md lg:max-w-full md:mx-0 md:w-1/2 xl:w-1/3 px-6 lg:px-16 xl:px-12 flex items-center justify-center">
                 <div className="w-full py-5">
                     <h1 className="text-xl md:text-2xl font-bold leading-tight">Log in to your account</h1>
@@ -73,6 +73,10 @@ export default function Login() {
                             variant="contained"
                             fullWidth
                             disabled={loggingIn}
+                            sx={{
+                                margin:"10px 0",
+                                padding:'10px 0'
+                            }}
                         >
                             {loggingIn ? <CircularProgress color="white" size="25px" /> : "Log in"}
                         </Button>

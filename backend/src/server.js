@@ -13,6 +13,7 @@ import QuizRoutes from './app/routes/Quiz.js';
 import UserRoutes from './app/routes/UserRoute.js';
 import corsConfig from './config/corsConfig.js';
 import { isAuthenticated } from './app/middlewares/isAuthenticated.js';
+import { connectionToRedis } from './db/connectToRedis.js';
 // importing routes ends
 
 const app = express();
@@ -23,7 +24,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(cors(corsConfig))
 connection();
-
+connectionToRedis();
 // io 
 const io = new Server(server, {cors:corsConfig});
 io.on('connection' , (S)=>{

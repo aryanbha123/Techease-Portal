@@ -38,9 +38,8 @@ export default function Dashboard({ children }) {
 
             {/* Main Layout */}
                 {/* AppBar */}
-                <section className="h-[70px] relative px-5 py-2 top-0  " style={{zIndex:"2000"}}>
+                <section className="h-[70px] bg-[#f4f4f4] relative px-5 py-2 top-0  " style={{zIndex:"2000"}}>
                     <nav className="bg-[#fff] rounded-[15px] text-white flex items-center px-6 md:px-5 justify-between w-[calc(100%-40px)]  h-[70px] fixed shadow-md z-50">
-                        {/* Menu Button */}
                         <img src="/assets/logo.png" className='h-10' alt="" />
                     </nav>
                 </section>
@@ -48,7 +47,7 @@ export default function Dashboard({ children }) {
 
                 {/* Drawer */}
                 <CustomMiniDrawer open={open} setOpen={setOpen} menuItems={menuItems} />
-                <main className="pl-[90px] pr-5 font-['Poppins'] text-lg py-5">
+                <main className="bg-[#f4f4f4] min-h-[100vh] pl-[90px] pr-5 font-['Poppins'] text-lg py-5">
                 {children}
             </main>
             

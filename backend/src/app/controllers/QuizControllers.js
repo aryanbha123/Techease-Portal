@@ -3,7 +3,9 @@ import Quiz from '../models/Quiz.js';
 import sendRes from '../util/sendRes.js';
 import checkQuestion from '../validators/isValidQuestion.js';
 import isValidQuiz from '../validators/isValidQuiz.js';
-
+import nodeCache from 'node-cache'
+import { client as redisClient } from '../../db/connectToRedis.js';
+// import { client as redisClient } from '../../db/connectToRedis.js'
 export const addQuiz = async (req, res) => {
     try {
         const { creator, title, opensAt, closeAt, duration, questions, marks } = req.body;
@@ -34,7 +36,7 @@ export const addQuiz = async (req, res) => {
 export const addQuestion = async (req, res) => {
 
     const session = mongoose.startSession();
-    const { question,quizId, marks, image, category, answer } = req.body;
+    const { question, quizId, marks, image, category, answer } = req.body;
     try {
         (await session).startTransaction();
         const questionToAdd = {
@@ -69,6 +71,7 @@ export const addQuestion = async (req, res) => {
     }
 
 }
+
 export const addOption = async (req, res) => {
     try {
         // const { questionId, text, isCorrect } = req.body;
@@ -93,9 +96,8 @@ export const addOption = async (req, res) => {
 
 export const getQuiz = async (req, res) => {
     try {
-
-        const page = parseInt(req.query.page) || 1; 
-        const limit = parseInt(req.query.limit) || 10; 
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 10;
         const search = req.query.search || "";
 
         const skip = (page - 1) * limit;
@@ -104,18 +106,42 @@ export const getQuiz = async (req, res) => {
             ? { title: { $regex: search, $options: "i" } }
             : {};
 
-        const quizzes = await Quiz.find(query).skip(skip).limit(limit);
-     
+        // Generate a unique Redis key based on the query parameters
+        const redisKey = `quiz:page=${page}&limit=${limit}&search=${search}`;
+
+        // Check if the data exists in the cache
+        const cachedData = await redisClient.get(redisKey);
+        if (cachedData) {
+            console.log("Cache hit for:", redisKey);
+            // return res.status(200).json(JSON.parse(cachedData));
+        }
+
+        console.log("Cache miss for:", redisKey);
+
+
+        // Fetch data from MongoDB if not cached
+        const quizzes = await Quiz.find(query).skip(skip).limit(limit).populate({
+            path: 'creator',
+            select: '-password' // Excludes the password field of the creator
+        });
         const totalItems = await Quiz.countDocuments(query);
 
-        res.status(200).json({
+
+        const response = {
             status: true,
             data: quizzes,
             page: page,
             limit: limit,
-            totalItems: totalItems, // Add total items count for frontend reference
-            totalPages: Math.ceil(totalItems / limit), // Calculate total pages
-        });
+            totalItems: totalItems,
+            totalPages: Math.ceil(totalItems / limit),
+        };
+
+        if (!search) {
+            await redisClient.setEx(redisKey, 600, JSON.stringify(response));
+        }
+
+        // Return the response
+        res.status(200).json(response);
     } catch (error) {
         res.status(400).json({
             status: false,
@@ -150,7 +176,7 @@ export const addQuestions = async (req, res) => {
         if (!quiz) {
             return sendRes("Quiz not found", 404, false, res);
         }
-        quiz.questions = [...quiz.questions , ...data]; 
+        quiz.questions = [...quiz.questions, ...data];
         await quiz.save();
 
         await session.commitTransaction();

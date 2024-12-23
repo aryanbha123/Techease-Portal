@@ -149,7 +149,7 @@ export default function Quiz () {
                     {item.description || 'No description'}
                   </p>
                   <p class='text-slate-500 dark:text-slate-400 mt-2 text-sm'>
-                    Created by : {item.creator.name}
+                    Created by : {item.creator?.name}
                   </p>
                   <p class='text-slate-500 dark:text-slate-400 mt-2 text-sm'>
                     Category : {item.category || 'Miscellaneous' }

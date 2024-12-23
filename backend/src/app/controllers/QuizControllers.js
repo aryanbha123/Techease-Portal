@@ -106,17 +106,17 @@ export const getQuiz = async (req, res) => {
             ? { title: { $regex: search, $options: "i" } }
             : {};
 
-        // Generate a unique Redis key based on the query parameters
-        const redisKey = `quiz:page=${page}&limit=${limit}&search=${search}`;
+        // // Generate a unique Redis key based on the query parameters
+        // const redisKey = `quiz:page=${page}&limit=${limit}&search=${search}`;
 
-        // Check if the data exists in the cache
-        const cachedData = await redisClient.get(redisKey);
-        if (cachedData) {
-            console.log("Cache hit for:", redisKey);
-            // return res.status(200).json(JSON.parse(cachedData));
-        }
+        // // Check if the data exists in the cache
+        // const cachedData = await redisClient.get(redisKey);
+        // if (cachedData) {
+        //     console.log("Cache hit for:", redisKey);
+        //     // return res.status(200).json(JSON.parse(cachedData));
+        // }
 
-        console.log("Cache miss for:", redisKey);
+        // console.log("Cache miss for:", redisKey);
 
         const quizzes = await Quiz.find(query).skip(skip).limit(limit).populate({
             path: 'creator',
@@ -134,9 +134,9 @@ export const getQuiz = async (req, res) => {
             totalPages: Math.ceil(totalItems / limit),
         };
 
-        if (!search) {
-            await redisClient.setEx(redisKey, 600, JSON.stringify(response));
-        }
+        // if (!search) {
+        //     await redisClient.setEx(redisKey, 600, JSON.stringify(response));
+        // }
 
         // Return the response
         res.status(200).json(response);

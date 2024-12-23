@@ -10,7 +10,6 @@ const ProtectedRoute = () => {
 
     useEffect(() => {
         dispatch(setLocation(location.pathname));
-        console.log("Current pathname: ", location.pathname);
     }, [dispatch, location.pathname]);
 
     return user ? <Outlet /> : <Navigate to="/login" replace />;

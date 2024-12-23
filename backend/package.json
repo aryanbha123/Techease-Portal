@@ -2,7 +2,7 @@
   "name": "backend",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.js",
+  "main": "src/app.js",
   "type": "module",
   "dependencies": {
     "@google/generative-ai": "^0.21.0",
@@ -146,7 +146,7 @@
     "xtend": "^4.0.2"
   },
   "scripts": {
-    "start": "nodemon  src/server.js",
+    "start": "nodemon  src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

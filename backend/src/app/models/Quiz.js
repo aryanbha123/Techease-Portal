@@ -9,6 +9,7 @@ const OptionsSchema = Schema({
 const QuestionSchema = Schema({
     quizId: { type: Schema.Types.ObjectId, required: true, ref: 'Quiz' },
     question: { type: String },
+    quizSection:{type:String , enum:['Aptitude' , 'Miscellenous' , 'Core'] },
     image: { type: String, sparse: true },
     marks: { type: Number, required: true },
     negative: { type: Number, default: 0 },
@@ -19,8 +20,8 @@ const QuestionSchema = Schema({
     },
     answer: { type: String, sparse: true },
     options: [OptionsSchema], // Corrected this line
-    type: { type: [String], default: [] },
-    tags: { type: [String], default: [] },
+    type: { type: [String], default: [] },// Easy , medum
+    tags: { type: [String], default: [] }, // #oops , #core 
 });
 
 const QuizSchema = Schema(

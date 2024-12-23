@@ -1,35 +1,39 @@
 import React, { useState, useEffect } from 'react'
+import { IconButton, Button, TextField, Divider } from '@mui/material'
 import {
   ArrowDropUp,
-  ArrowDropDown,
-  ExitToApp,
-  Fullscreen,
   Help,
-  Menu
+  Menu,
+  Fullscreen,
+  ExitToApp,
+  ArrowDropDown,
+  FullscreenExit
 } from '@mui/icons-material'
-import {
-  IconButton,
-  Typography,
-  Button,
-  TextField,
-  Divider
-} from '@mui/material'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { handleFullScreen } from '../../libs/helpers'
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import SolutionWarningModal from '../../components/modals/SolutionWarningModal'
 
 const Solution = () => {
-  const [response, setResponse] = useState([])
+  const navigate = useNavigate()
+  const [response, setResponse] = useState({})
   const [open, setOpen] = useState(false)
+  const [submit, setSubmit] = useState()
   const [currentQuiz, setCurrentQuiz] = useState(null)
   const [currentPage, setCurrentPage] = useState(1)
-  const [selectedOption, setSelectedOption] = useState(null) // Track selected option
-  const questionsPerPage = 1 // Only one question per page
+  const questionsPerPage = 1
   const { id } = useParams()
   const [windowDimensions, setWindowDimensions] = useState([
     window.innerHeight,
     window.innerWidth
   ])
-  // Fetch Quiz Data
+
+  // changehandeler
+  const changehandeler = e => {
+    const { name, value } = e.target
+    setResponse({ ...response, [name]: value })
+  }
+
   const getQuiz = async () => {
     try {
       const res = await axios.get(
@@ -37,23 +41,33 @@ const Solution = () => {
       )
       if (res.data) {
         setCurrentQuiz(res.data)
+        const initialResponse = res.data.questions.reduce((acc, q) => {
+          acc[q._id] = '' // Default value for each question
+          return acc
+        }, {})
+        setResponse(initialResponse)
       }
     } catch (error) {
-      console.error('Error fetching quiz:', error)
+      alert('Error Fetching Quiz')
+      navigate('/login')
     }
   }
 
   useEffect(() => {
     getQuiz()
+
     const handleVisibilityChange = () => {
       if (document.hidden) {
-        setOpen(true)
+        // setOpen(true)
         // alert('Tab switching is not allowed during the quiz!')
       }
     }
     const handelResize = () => {
-      if(window.innerHeight < windowDimensions[0] || window.innerWidth < windowDimensions[1]){
-        setOpen(true);
+      if (
+        window.innerHeight < windowDimensions[0] ||
+        window.innerWidth < windowDimensions[1]
+      ) {
+        setOpen(true)
       }
     }
     const disableShortcuts = e => {
@@ -98,20 +112,9 @@ const Solution = () => {
     if (currentPage > 1) setCurrentPage(currentPage - 1)
   }
 
-  // Handle Fullscreen
-  const handleFullScreen = () => {
-    const element = document.getElementById('root')
-    if (element.requestFullscreen) {
-      element.requestFullscreen()
-    } else {
-      console.error('Fullscreen API is not supported in this browser.')
-    }
+  const submitHandler = () => {
+    console.log(response)
   }
-
-  const handleOptionClick = optionText => {
-    setSelectedOption(optionText) // Allow only one answer
-  }
-
   return (
     <main className='font-[Lato] bg-[#f6f6f6] h-screen w-screen overflow-x-hidden overflow-y-scroll'>
       {/* Header */}
@@ -124,16 +127,17 @@ const Solution = () => {
             <IconButton onClick={handleFullScreen}>
               <Fullscreen />
             </IconButton>
+
             <Divider flexItem orientation='vertical' />
             <span className='text-[#757575]'>
               <Help color='inherit' />
               <small>Help</small>
             </span>
             <Divider flexItem orientation='vertical' />
-            <span className='text-[#757575]'>
+            <Link to={'/user/quiz'} className='text-[#757575]'>
               <ExitToApp color='inherit' />
               <small> Exit</small>
-            </span>
+            </Link>
             <Divider flexItem orientation='vertical' />
             <IconButton>
               <Menu />
@@ -143,50 +147,26 @@ const Solution = () => {
       </header>
 
       {/* Main Content */}
-      <section className='flex flex-col h-[calc(100vh-70px)] pl-5 pr-28 py-10'>
+      <div className='flex flex-col h-[calc(100vh-70px)] pl-5 pr-28 py-10'>
         {currentQuestions.map((question, index) => (
-          <div key={question._id} className='flex justify-between gap-5'>
+          <div key={index} className='flex justify-between gap-5'>
             <div className='mb-8 flex-1 px-4 rounded-lg'>
               <h1 className='text-lg font-semibold mb-6 text-gray-900'>
                 Q{(currentPage - 1) * questionsPerPage + index + 1}:{' '}
                 {question.question}
               </h1>
-              {question.image && (
+              {question.image ? (
                 <img
                   src={question.image}
                   alt={`Question ${index + 1}`}
                   className='w-96 h-auto rounded-lg mb-4'
                 />
+              ) : (
+                <img
+                  src='https://i0.wp.com/www.bishoprook.com/wp-content/uploads/2021/05/placeholder-image-gray-16x9-1.png?resize=300%2C169&ssl=1'
+                  className='w-96'
+                />
               )}
-              {/* <p className='overflow-x-hidden h-[calc(100vh-200px)]  overflow-y-scroll'>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
-                aperiam quam molestiae aliquam. Iure, a mollitia reprehenderit
-                officia sit, et cumque atque commodi ipsam, quasi vel magni
-                voluptates necessitatibus doloribus? Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Eius vel ut blanditiis porro,
-                fugit quod veritatis nobis consequatur laborum repudiandae
-                itaque eaque eos harum impedit atque modi nisi? Incidunt,
-                consectetur. Lorem ipsum dolor sit amet consectetur adipisicing
-                elit. Eum culpa placeat, maxime autem dolore nobis sit numquam
-                quidem excepturi ex aut debitis corrupti in animi rem laborum
-                quod doloribus quis? Lorem ipsum dolor sit amet consectetur
-                adipisicing elit. Eum culpa placeat, maxime autem dolore nobis
-                sit numquam quidem excepturi ex aut debitis corrupti in animi
-                rem laborum quod doloribus quis? Lorem ipsum dolor sit amet
-                consectetur adipisicing elit. Eum culpa placeat, maxime autem
-                dolore nobis sit numquam quidem excepturi ex aut debitis
-                corrupti in animi rem laborum quod doloribus quis? Lorem ipsum
-                dolor sit amet consectetur adipisicing elit. Eum culpa placeat,
-                maxime autem dolore nobis sit numquam quidem excepturi ex aut
-                debitis corrupti in animi rem laborum quod doloribus quis? Lorem
-                ipsum dolor sit amet consectetur adipisicing elit. Eum culpa
-                placeat, maxime autem dolore nobis sit numquam quidem excepturi
-                ex aut debitis corrupti in animi rem laborum quod doloribus
-                quis? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Eum culpa placeat, maxime autem dolore nobis sit numquam quidem
-                excepturi ex aut debitis corrupti in animi rem laborum quod
-                doloribus quis?
-              </p> */}
             </div>
 
             <div className='flex justify-start flex-[0.8]'>
@@ -199,14 +179,23 @@ const Solution = () => {
                     {question.options.map(option => (
                       <div
                         key={option._id}
-                        className={`option ${
-                          selectedOption === option.text
-                            ? 'bg-navy text-white'
-                            : 'shadow-md'
-                        }`}
-                        onClick={() => handleOptionClick(option.text)}
+                        className={`${
+                          response[question._id] != option._id
+                            ? 'bg-white text-gray-900 '
+                            : 'bg-sky-800 text-white'
+                        }   relative rounded-3xl cursor-pointer items-center px-5 w-full h-[50px] flex gap-1`}
                       >
-                        <Typography className='label'>{option.text}</Typography>
+                        <input
+                          required
+                          type='radio'
+                          name={`${question._id}`}
+                          value={`${option?._id}`}
+                          className='absolute w-full cursor-pointer h-full opacity-0 z-10'
+                          onChange={changehandeler}
+                        />
+                        <span className='absolute text-inherit z-9 w-full flex items-center py-2 h-[50px]'>
+                          {option.text}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -219,6 +208,10 @@ const Solution = () => {
                   </h1>
 
                   <TextField
+                    autoFocus
+                    value={response[`${question._id}`]}
+                    onChange={changehandeler}
+                    name={`${question._id}`}
                     fullWidth
                     variant='standard'
                     label='Enter Answer'
@@ -228,10 +221,29 @@ const Solution = () => {
             </div>
           </div>
         ))}
+        <Divider flexItem orientation='vertical' />
 
         <div className='flex fixed bottom-7 right-32 justify-end'>
-          {currentPage === totalPages && (
-            <Button variant='contained'>Submit</Button>
+          {currentPage === totalPages ? (
+            <div className='flex gap-2'>
+              <Button variant='contained' onClick={handlePreviousPage}>
+                Prev
+              </Button>
+              <Button onClick={submitHandler} variant='contained'>
+                Submit
+              </Button>
+            </div>
+          ) : (
+            <div className='flex gap-2'>
+              {currentPage != 1 && (
+                <Button variant='contained' onClick={handlePreviousPage}>
+                  Prev
+                </Button>
+              )}
+              <Button variant='contained' onClick={handleNextPage}>
+                Next
+              </Button>
+            </div>
           )}
         </div>
         <div className='relative'>
@@ -259,44 +271,111 @@ const Solution = () => {
             <ArrowDropDown />
           </div>
         </div>
-      </section>
+      </div>
 
-      {open && <Warning setOpen={setOpen} />}
+      {open && <SolutionWarningModal setOpen={setOpen} />}
+      {submit && <ConfirmModal />}
     </main>
   )
 }
 
 export default Solution
 
-const Warning = ({ setOpen }) => (
-  <div className='fixed inset-0 flex items-center justify-center z-50 backdrop-blur confirm-dialog '>
-    <div className='relative px-4 min-h-screen md:flex md:items-center md:justify-center'>
-      <div className=' opacity-25 w-full h-full absolute z-10 inset-0'></div>
-      <div className='bg-white rounded-lg md:max-w-md md:mx-auto p-4 fixed inset-x-0 bottom-0 z-50 mb-4 mx-4 md:relative shadow-lg'>
-        <div className='md:flex items-center'>
-          <div className='rounded-full border border-gray-300 flex items-center justify-center w-16 h-16 flex-shrink-0 mx-auto'>
-            <i className='bx bx-error text-3xl'>&#9888;</i>
-          </div>
-          <div className='mt-4 md:mt-0 md:ml-6 text-center md:text-left'>
-            <p className='font-bold'>Warning!</p>
-            <p className='text-sm text-gray-700 mt-1'>
-              Tab Swicthing or Window Minimizing is not allowed One more
-              cheating attempt will automatically submit your quiz !
-            </p>
-          </div>
+const ConfirmModal = () => {
+  return (
+    <div id='YOUR_ID' className='fixed z-50 inset-0 overflow-y-auto'>
+      <div className='flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0'>
+        <div className='fixed inset-0 transition-opacity' aria-hidden='true'>
+          <div className='absolute inset-0 bg-gray-500 opacity-75'></div>
         </div>
-        <div className='text-center md:text-right mt-4 md:flex md:justify-end'>
-          <button
-            onClick={() => {
-              setOpen(false)
-            }}
-            id='confirm-delete-btn'
-            className='block w-full md:inline-block md:w-auto px-4 py-3 md:py-2 bg-red-200 text-red-700 rounded-lg font-semibold text-sm md:ml-2 md:order-2'
-          >
-            Close
-          </button>
+
+        <span
+          className='hidden sm:inline-block sm:align-middle sm:h-screen'
+          aria-hidden='true'
+        >
+          &#8203;
+        </span>
+
+        <div
+          className='inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6'
+          role='dialog'
+          aria-modal='true'
+          aria-labelledby='modal-headline'
+        >
+          <div className='hidden sm:block absolute top-0 right-0 pt-4 pr-4'>
+            <button
+              type='button'
+              data-behavior='cancel'
+              className='bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500'
+            >
+              <span className='sr-only'>Close</span>
+              <svg
+                className='h-6 w-6'
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+                aria-hidden='true'
+              >
+                <path
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  stroke-width='2'
+                  d='M6 18L18 6M6 6l12 12'
+                />
+              </svg>
+            </button>
+          </div>
+          <div className='sm:flex sm:items-start'>
+            <div className='mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10'>
+              <svg
+                className='h-6 w-6 text-blue-600'
+                xmlns='http://www.w3.org/2000/svg'
+                fill='none'
+                viewBox='0 0 24 24'
+                stroke='currentColor'
+                aria-hidden='true'
+              >
+                <path
+                  stroke-linecap='round'
+                  stroke-linejoin='round'
+                  stroke-width='2'
+                  d='M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z'
+                />
+              </svg>
+            </div>
+            <div className='mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left'>
+              <h3
+                className='text-lg leading-6 font-medium text-gray-900'
+                id='modal-headline'
+              >
+                Are you sure you want to submit quiz ?
+              </h3>
+              <div className='mt-2'>
+                <p className='text-sm text-gray-500'>
+                  You will not be allowed to change your resposne once submitted
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className='mt-5 sm:mt-4 sm:flex sm:flex-row-reverse'>
+            <button
+              type='button'
+              data-behavior='commit'
+              className='w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm'
+            >
+              Commit
+            </button>
+            <button
+              type='button'
+              data-behavior='cancel'
+              className='mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:w-auto sm:text-sm'
+            >
+              Cancel
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-)
+  )
+}

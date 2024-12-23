@@ -118,8 +118,6 @@ export const getQuiz = async (req, res) => {
 
         console.log("Cache miss for:", redisKey);
 
-
-        // Fetch data from MongoDB if not cached
         const quizzes = await Quiz.find(query).skip(skip).limit(limit).populate({
             path: 'creator',
             select: '-password' // Excludes the password field of the creator

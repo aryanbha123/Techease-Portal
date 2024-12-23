@@ -1,280 +1,181 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Box, Button, Typography, InputAdornment, InputLabel, FormControl, Input, IconButton } from "@mui/material";
-import { ArrowRight, Edit, Lock, Refresh, Search } from "@mui/icons-material";
-import { Link } from "react-router-dom";
-import LoadingModal from "../../components/modals/LoadingModal";
-import Slider from "react-slick";
-import SliderSettings from "../../libs/sliderSettings";
-const Addquiz = React.lazy(() => import("../../components/modals/Addquiz"));
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import {
+  Typography,
+} from '@mui/material'
+import {
+  ArrowRight,
+  LockRounded,
+} from '@mui/icons-material'
+import { Link } from 'react-router-dom'
 
-export default function InfiniteScrollWithMongo() {
-  const [items, setItems] = useState([]);
-  const [page, setPage] = useState(1);  // Track current page
-  const [hasMore, setHasMore] = useState(true);  // For determining if more items exist
-  const [searchTerm, setSearchTerm] = useState("");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [loading, setLoading] = useState(false);
+export default function Quiz () {
+  const [items, setItems] = useState([])
+  const [page, setPage] = useState(1) // Track current page
+  const [hasMore, setHasMore] = useState(true) // For determining if more items exist
+  const [searchTerm, setSearchTerm] = useState('')
+  const [searchQuery, setSearchQuery] = useState('')
+  const [loading, setLoading] = useState(false)
 
   // Fetch Items function with pagination
-  const fetchItems = async (fetchLimit) => {
+  const fetchItems = async fetchLimit => {
     try {
-      setLoading(true);
-      const limit = fetchLimit || 9;
+      setLoading(true)
+      const limit = fetchLimit || 9
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/api/quiz/get?page=${page}&limit=${limit}&search=${searchQuery}`
-      );
-      const newItems = response.data.data;
+      )
+      const newItems = response.data.data
 
-      setItems((prevItems) => (page === 1 ? newItems : [...prevItems, ...newItems]));
+      setItems(prevItems =>
+        page === 1 ? newItems : [...prevItems, ...newItems]
+      )
       if (newItems.length < limit) {
-        setHasMore(false);  // If there are fewer items than the limit, stop loading more
+        setHasMore(false) // If there are fewer items than the limit, stop loading more
       }
     } catch (error) {
-      console.error("Error fetching items:", error);
+      console.error('Error fetching items:', error)
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   useEffect(() => {
-    fetchItems(9);  // Fetch items when page or search query changes
-  }, [searchQuery, page]);
+    fetchItems(30) // Fetch items when page or search query changes
+  }, [searchQuery, page])
 
   const handleSearch = () => {
-    setPage(1);  // Reset to the first page when searching
-    setItems([]);  // Clear existing items
-    setSearchQuery(searchTerm);
-  };
+    setPage(1) // Reset to the first page when searching
+    setItems([]) // Clear existing items
+    setSearchQuery(searchTerm)
+  }
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      handleSearch();
+  const handleKeyPress = e => {
+    if (e.key === 'Enter') {
+      handleSearch()
     }
-  };
+  }
 
   // Handle Next Page
   const handleNextPage = () => {
     if (hasMore) {
-      setPage((prevPage) => prevPage + 1);
+      setPage(prevPage => prevPage + 1)
     }
-  };
-
-  // Handle Previous Page
-  const handlePrevPage = () => {
-    if (page > 1) {
-      setPage((prevPage) => prevPage - 1);
-    }
-  };
+  }
 
   return (
-    <>
-      <div className="flex gap-6 justify-between bg-white pr-5">
-        <div className="flex items-center gap-3 border-none p-5">
+    <div className='dark:bg-gray-900 bg-white transition-all duration-300'>
+      {/* <div className='flex gap-6 justify-between dark:text-white text-black pr-5'>
+        <div className='flex items-center gap-3 border-none p-5'>
           <Box sx={{ '& > :not(style)': { m: 1 } }}>
-            <FormControl variant="standard">
-              <InputLabel htmlFor="input-with-icon-adornment">Search Quiz</InputLabel>
+            <FormControl variant='standard'>
+              <InputLabel
+                htmlFor='input-with-icon-adornment'
+                className='dark:text-[#f2f2f2]'
+              >
+                Search Quiz
+              </InputLabel>
               <Input
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={e => setSearchTerm(e.target.value)}
                 onKeyUp={handleKeyPress}
-                id="input-with-icon-adornment"
+                id='input-with-icon-adornment'
                 startAdornment={
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
+                  // <InputAdornment position='start'>
+                    <Search color='inherit' />
+                  // </InputAdornment>
                 }
+                className='dark:bg-gray-800 dark:text-white'
               />
             </FormControl>
           </Box>
-          <Button variant="contained" color="primary" sx={{ color: "#f1f1f1", fontWeight: "bold" }} onClick={handleSearch}>
+          <Button
+            variant='contained'
+            color='primary'
+            sx={{ color: '#f1f1f1', fontWeight: 'bold' }}
+            onClick={handleSearch}
+            className='dark:bg-[#f1f1f1] dark:text-gray-900'
+          >
             Search
           </Button>
         </div>
-        <div className="items-center flex justify-between">
+        <div className='items-center flex justify-between'>
           <div>
-            <IconButton>
+            <IconButton className='dark:text-white'>
               <Refresh />
             </IconButton>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      {/* Infinite Scroll */}
-      <section className="bg-gray-100 px-10 py-8 overflow-hidden">
-        <Slider centerMode={false} {...SliderSettings} className="">
-
-          {items && items.length > 0 ? (
+      {/* Items Section */}
+      <section className='bg-gray-100 dark:bg-gray-800  py-8 overflow-hidden'>
+        <div className='grid md:grid-cols-2 grid-cols-1 lg:grid-cols-5 gap-4'>
+          {items &&
             items.map((item, index) => (
-              <div key={index} className="max-w-fit">
-                <article className="border w-64 rounded-lg shadow-md bg-white p-5 flex flex-col justify-between leading-normal transition-transform transform ">
-                  {/* Quiz Image */}
-                  <img
-                    src="https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ="
-                    alt="Qualcomm"
-                    className="h-28 w-full object-cover rounded-t-lg"
-                  />
-
-                  {/* Card Content */}
-                  <div className="pt-3">
-
-                    {
-                      !item.isAvailable ?
-                        <p className="text-sm text-gray-600 flex items-center mb-2">
-                          <svg
-                            className="fill-current text-gray-500 w-4 h-4 mr-2"
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                          >
-                            <path d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z"></path>
-                          </svg>
-                          Locked
-                        </p> : <>
-                          <Link to={'/user/attempt/' + item._id} className="text-sm text-gray-600 flex items-center mb-2">
-                            Attempt <ArrowRight />
+              <>
+                <div key={index} class='bg-white dark:bg-slate-900 rounded-lg px-6 py-8 ring-1 ring-slate-900/5 shadow-xl'>
+                  <div className='flex gap-3'>
+                    <span class='rounded-md shadow-lg'>
+                      <img
+                        src='https://png.pngtree.com/png-vector/20220611/ourmid/pngtree-brain-3d-illustration-business-businessman-png-image_5026470.png'
+                        className='h-16 w-16 rounded-md'
+                        alt=''
+                      />
+                    </span>
+                    <div className='flex-1 flex flex-col'>
+                      <small class='text-gray-900 dark:text-[#f3f3f3] text-lg'>
+                        {item.title}
+                      </small>
+                      <small class='text-gray-900 mt-1 dark:text-[#f3f3f3] text-sm items-center ml-1 flex gap-1'>
+                        {!item.isAvailable ? (
+                          <>
+                            <small>Locked</small>{' '}
+                            <LockRounded fontSize='1.2rem' />
+                          </>
+                        ) : (
+                          <Link to={'/user/attempt/' + item._id }>
+                            <samll>Attempt</samll>
+                            <ArrowRight />
                           </Link>
-                        </>
-                    }
-
-                    <Link
-                      href="#"
-                      className="text-gray-900 font-bold text-sm mb-2 hover:text-indigo-600 inline-block"
-                    >
-                      {item.title}
-                    </Link>
-
-                    <p className="text-gray-700 text-xs h-20 overflow-x-hidden overflow-y-auto">
-                      {item.description || "No Description "}
-                    </p>
-                    <small className="text-xs" >Creator : {item.creator.name}</small>
+                        )}
+                      </small>
+                    </div>
                   </div>
+                  <h3 class='text-slate-900 dark:text-white mt-5 text-sm font-medium tracking-tight'>
+                    Duration :  {item.duration + " "} min.
+                  </h3>
+                  <p class='text-slate-500 dark:text-slate-400 mt-2 text-sm'>
+                    {item.description || 'No description'}
+                  </p>
+                  <p class='text-slate-500 dark:text-slate-400 mt-2 text-sm'>
+                    Created by : {item.creator.name}
+                  </p>
+                  <p class='text-slate-500 dark:text-slate-400 mt-2 text-sm'>
+                    Category : {item.category || 'Miscellaneous' }
+                  </p>
+                </div>
+              </>
+            ))}
+        </div>
 
-                </article>
-              </div>
-            ))
-          ) : (
-            // <div className="flex bg-white text-center p-5 w-full">No Quiz Found</div>
-            <></>
-          )}
-
-
-        </Slider>
-        {
-          loading && <LoadingModal />
-        }
-      </section>
-      <section className="bg-gray-100 px-10 py-8 overflow-hidden">
-        <Slider centerMode={false} {...SliderSettings} className="">
-          {/* {items && items.length > 0 ? (
-            items.map((item, index) => (
-              <div key={index} className="max-w-fit">
-                <Card opensAt={item.opensAt} closeAt={item.closeAt} _id={item._id} title={item.title} createdAt={item.createdAt} updatedAt={item.updatedAt} />
-              </div>
-            ))
-          ) : (
-            // <div className="flex bg-white text-center p-5 w-full">No Quiz Found</div>
-            <></>
-          )} */}
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-
-        </Slider>
-        {
-          loading && <LoadingModal />
-        }
-      </section>
-      <section className="bg-gray-100 px-10 py-8 overflow-hidden">
-        <Slider centerMode={false} {...SliderSettings} className="">
-          {/* {items && items.length > 0 ? (
-            items.map((item, index) => (
-              <div key={index} className="max-w-fit">
-                <Card opensAt={item.opensAt} closeAt={item.closeAt} _id={item._id} title={item.title} createdAt={item.createdAt} updatedAt={item.updatedAt} />
-              </div>
-            ))
-          ) : (
-            // <div className="flex bg-white text-center p-5 w-full">No Quiz Found</div>
-            <></>
-          )} */}
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-
-        </Slider>
-        {
-          loading && <LoadingModal />
-        }
-      </section>
-      <section className="bg-gray-100 px-10 py-8 overflow-hidden">
-        <Slider centerMode={false} {...SliderSettings} className="">
-          {/* {items && items.length > 0 ? (
-            items.map((item, index) => (
-              <div key={index} className="max-w-fit">
-                <Card opensAt={item.opensAt} closeAt={item.closeAt} _id={item._id} title={item.title} createdAt={item.createdAt} updatedAt={item.updatedAt} />
-              </div>
-            ))
-          ) : (
-            // <div className="flex bg-white text-center p-5 w-full">No Quiz Found</div>
-            <></>
-          )} */}
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-          <Card></Card>
-
-        </Slider>
-        {
-          loading && <LoadingModal />
-        }
-      </section>
-    </>
-  );
-}
-const Card = () => {
-  return (
-    <article className="border rounded-lg shadow-md bg-white p-5 flex flex-col justify-between leading-normal transition-transform transform ">
-      {/* Quiz Image */}
-      <img
-        src="https://cxotoday.com/wp-content/uploads/2023/02/qualcomm.jpeg"
-        alt="Qualcomm"
-        className="h-28 w-full object-cover rounded-t-lg"
-      />
-
-      {/* Card Content */}
-      <div className="pt-3">
-        <p className="text-sm text-gray-600 flex items-center mb-2">
-          <svg
-            className="fill-current text-gray-500 w-4 h-4 mr-2"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
+        {/* View More Button */}
+        {hasMore && !loading && (
+          <p
+            className='cursor-pointer text-gray-900 dark:text-[#f1f1f1] p-5 text-center w-full'
+            onClick={handleNextPage}
           >
-            <path d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z"></path>
-          </svg>
-          Locked
-        </p>
+            View More
+          </p>
+        )}
 
-        <Link
-          href="#"
-          className="text-gray-900 font-bold text-sm mb-2 hover:text-indigo-600 inline-block"
-        >
-          Can coffee make you a better developer?
-        </Link>
-
-        <p className="text-gray-700 text-xs">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-          Voluptatibus quia, nulla! Maiores et perferendis eaque,
-          exercitationem praesentium nihil.
-        </p>
-      </div>
-
-    </article>
-  );
-};
+        {/* Loading indicator */}
+        {loading && (
+          <div className='flex justify-center items-center h-screen'>
+            <Typography>Loading...</Typography>
+          </div>
+        )}
+      </section>
+    </div>
+  )
+}

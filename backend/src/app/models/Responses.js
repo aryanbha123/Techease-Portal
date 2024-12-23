@@ -2,18 +2,14 @@ import mongoose, { Schema } from "mongoose";
 
 const responseSchema = Schema(
     {
+        cheatingAttenpt: {type:Number , default:0},
         quizId: { type: Schema.Types.ObjectId, ref: 'Quiz', required: true },
         userId: { type: Schema.Types.ObjectId, ref: 'Users', required: true },
         startedAt:{type:Date , default:Date.now()},
         isubmitted:{type:Boolean , default:flase},
         responses: [
             {
-                questionId: {
-                    type: Schema.Types.ObjectId,
-                    ref: 'Question',
-                    required: true
-                },
-                correctAnswer:{type:String},
+                question:{type:{} , default:{}},
                 answer: [{ type: String, required: true }],
             }
         ]
